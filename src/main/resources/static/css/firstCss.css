@@ -1,0 +1,14 @@
+*{
+    font-family: "W_yasamin";
+}
+.top100{
+    top: 100px;
+ }
+
+.pad-tb{
+    padding-top: 100px;
+}
+
+.bg-gray{
+    background-color: #616161;
+}

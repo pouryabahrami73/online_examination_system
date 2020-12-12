@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>پیام ذخیر موفق دوره</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
+          integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/firstCss.css">
+</head>
+<body class="bg-dark" style="padding-top: 150px">
+<div class="card text-center mx-auto w-75 p-3 bg-secondary">
+    <div class="alert alert-info text-primary" role="alert">
+        <h4 class="alert-heading text-primary">ذخیره موفق دوره!</h4>
+        <p>دوره جدید ذخیره شد!</p>
+        <hr>
+        <div class="col">
+            <a class="btn btn-dark col-sm-4 text-warning" th:href="@{create-new-course}">بازگشت به صفحه ایجاد دوره</a>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

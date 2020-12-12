@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>نتیجه ثبت نام</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
+          integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/firstCss.css">
+</head>
+<body class="bg-dark" style="padding-top: 150px">
+<div class="card text-center mx-auto w-75 p-3 bg-secondary" >
+    <div class="alert alert-info text-primary" role="alert">
+        <h4 class="alert-heading text-primary">ارسال موفق اطلاعات!</h4>
+        <p>اطلاعات شما با موقیت برای مدیر ارسال شد!</p>
+        <hr>
+        <p class="mb-0">
+            پس از تاًیید ایشان نام کاربری و رمز عبور شما در همین صفحه قابل مشاهده خواهد بود.
+            تا پیش از تاًیید ایشان نام کاربری شما، <span class="text-danger" th:text="${user.getUserName()}"></span> و رمز عبور شما، <span class="text-danger" >کد ملی شما</span> خواهد بود.
+        </p>
+    </div>
+</div>
+</body>
+</html>
