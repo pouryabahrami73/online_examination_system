@@ -86,4 +86,9 @@ public class MyUserDetailsService implements UserDetailsService, UserService {
         String passWord = passwordEncoder.encode(pass);
         return passWord;
     }
+
+    @Override
+    public User findByUserName(String name) {
+        return repository.findByUserName(name).get();
+    }
 }

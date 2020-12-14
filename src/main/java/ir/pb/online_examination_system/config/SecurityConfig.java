@@ -20,7 +20,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        super.configure(auth);
         auth.authenticationProvider(authenticationProvider);
     }
 
@@ -34,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .mvcMatchers("/sign-up-form").permitAll()
+                .mvcMatchers("/user/not-registered").hasAnyRole("MASTER", "STUDENT")
                 .mvcMatchers("/master/**").hasAnyRole("MASTER", "ADMIN")
                 .mvcMatchers("/student/**").hasAnyRole("STUDENT", "ADMIN")
                 .mvcMatchers("/sign-in").permitAll()

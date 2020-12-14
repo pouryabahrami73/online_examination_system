@@ -12,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -22,10 +20,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     private MyUserDetailsService userDetailsService;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Bean
-    private Cookie cookie(){
-        return new Cookie("isActive", "false");
-    }
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 

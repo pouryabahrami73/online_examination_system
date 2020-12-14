@@ -1,5 +1,8 @@
 package ir.pb.online_examination_system.config;
 
+import ir.pb.online_examination_system.domains.User;
+import ir.pb.online_examination_system.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,10 +21,13 @@ import java.util.List;
 @Configuration
 public class MyLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
+    @Autowired
+    private UserService service;
+
     @Override
     protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
-        String targetUrl = determineTargetUrl(authentication, request);
+        String targetUrl = determineTargetUrl(authentication);
         if(response.isCommitted()){
             return;
         }
@@ -29,9 +35,9 @@ public class MyLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler
         strategy.sendRedirect(request, response, targetUrl);
     }
 
-    protected String determineTargetUrl(Authentication authentication, HttpServletRequest request) {
+    protected String determineTargetUrl(Authentication authentication) {
         String url = "/login?error=ture";
-
+        User user = service.findByUserName(authentication.getName());
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         List<String> roles = new ArrayList<>();
         for (GrantedAuthority authority: authorities){
@@ -39,10 +45,12 @@ public class MyLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler
         }
         if(roles.contains("ROLE_ADMIN")){
             url = "/admin";
-        }else if (roles.contains("ROLE_MASTER") /*& request.getCookies("isActive")*/){
+        }else if (roles.contains("ROLE_MASTER") & user.isActive()){
             url = "/master";
-        }else if (roles.contains("ROLE_STUDENT") /*& request.getCookies("isActive")*/){
+        }else if (roles.contains("ROLE_STUDENT") & user.isActive()){
             url = "/student";
+        }else {
+            url = "/user/not-registered";
         }
         return url;
     }

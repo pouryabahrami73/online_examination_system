@@ -16,4 +16,6 @@ public interface UserService {
     List<User> findAllActiveOrInactiveByLastNameAndRoles(boolean situation, String lastName, String roles);
     List<User> findAllActiveOrInactiveByFirstNameAndLastNameAndRoles(boolean situation, String firstName, String lastName, String roles);
     String hashPass(String pass);
+
+    User findByUserName(String name);
 }

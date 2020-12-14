@@ -122,9 +122,9 @@
                         </td>
                         <td th:text="${user.lastName}">
                         </td>
-                        <td th:if="${user.roles.equals('ROLE_MASTER')}" th:text="استاد">
+                        <td th:if="${user.roles.contains('ROLE_MASTER')}" th:text="استاد">
                         </td>
-                        <td th:if="${user.roles.equals('ROLE_STUDENT')}" th:text="دانشجو">
+                        <td th:if="${user.roles.contains('ROLE_STUDENT')}" th:text="دانشجو">
                         </td>
                         <input type="hidden" name="id" id="id" th:value="${user.id}">
                         <td><button type="submit" class="btn btn-dark col-sm-4 text-warning">تاٌیید</button></td>

@@ -29,5 +29,9 @@ public class UserController {
         service.save(user);
         return "sign-up-res";
     }
+    @GetMapping("/not-registered")
+    public String showNotRegisteredPage(){
+        return "not-registered-yet";
+    }
 
 }
