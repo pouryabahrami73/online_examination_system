@@ -18,7 +18,7 @@ public class Exam extends BaseEntity<Long> {
     private Date date;
     @Column
     @Temporal(TemporalType.TIME)
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "HH:mm")
     private Date time;
     @Column
     private int durationInMin;

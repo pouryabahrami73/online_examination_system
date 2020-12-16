@@ -80,6 +80,8 @@
                         </td>
                         <td th:text="${exam.durationInMin}">
                         </td>
+                        <td th:text="${exam.information}">
+                        </td>
                         <input type="hidden" name="id" id="id" th:value="${exam.id}">
                         <input type="hidden" name="course" id="course" th:value="${course}">
                         <td th:if="${exam.date.after(#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm'))}">
