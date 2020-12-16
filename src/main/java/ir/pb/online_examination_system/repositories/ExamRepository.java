@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CourseRepository extends JpaRepository<Course, Long> {
+public interface ExamRepository extends JpaRepository<Exam, Long> {
+    List<Exam> findAllByCourse(Course course);
 }

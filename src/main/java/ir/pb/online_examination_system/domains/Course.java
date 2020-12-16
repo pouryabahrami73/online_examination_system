@@ -3,13 +3,10 @@ package ir.pb.online_examination_system.domains;
 import ir.pb.online_examination_system.base.domians.BaseEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Component
@@ -83,5 +80,10 @@ public class Course extends BaseEntity<Long> {
 
     public void setExams(List<Exam> exams) {
         this.exams = exams;
+    }
+
+    @Override
+    public String toString() {
+        return name + " " +  startDate + " " + finishDate;
     }
 }

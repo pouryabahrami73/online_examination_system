@@ -20,5 +20,10 @@ public class CourseServiceImpl implements CourseService {
     public Course save(Course course) {
         return repository.save(course);
     }
+
+    @Override
+    public Course findById(Long id) {
+        return repository.findById(id).get();
+    }
 }
 

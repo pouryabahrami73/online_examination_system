@@ -1,5 +1,7 @@
 package ir.pb.online_examination_system.services;
 
+import ir.pb.online_examination_system.domains.Course;
+import ir.pb.online_examination_system.domains.Exam;
 import ir.pb.online_examination_system.domains.Master;
 import ir.pb.online_examination_system.domains.User;
 
@@ -12,4 +14,14 @@ public interface MasterService {
     void setUser(User user);
 
     List<Master> findAll();
+
+    List<Course> findMyCourses();
+
+    Course findCourseById(Long id);
+
+    List<Exam> findExamsOfCourse(Course course);
+
+    Exam findExamById(Long id);
+
+    Exam saveExam(Exam exam);
 }

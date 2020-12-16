@@ -52,6 +52,10 @@
             </li>-->
         </ul>
     </div>
+    <form class="form-inline my-2 my-lg-0" th:action="@{/logout}">
+        <span class="navbar-brand mb-0 h1 text-warning" th:text="${#authentication.getName()}"></span>
+        <button class="btn btn-dark col-sm-4 text-warning" type="submit">خروج</button>
+    </form>
 </nav>
 <div class="container-fluid">
     <div class="row">
@@ -85,7 +89,8 @@
                         <input type="text" class="form-control" id="firstName" name="firstName" placeholder="نام">
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="نام خانوادگی">
+                        <input type="text" class="form-control" id="lastName" name="lastName"
+                               placeholder="نام خانوادگی">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -113,9 +118,10 @@
                     <th scope="col">تاًیید</th>
                 </tr>
                 </thead>
-                <form class="card-body" action="#" th:action="@{register}" method="post">
-                    <tbody>
-                    <tr th:each="user: ${users}">
+                <tbody>
+                <form class="card-body" action="#" th:each="user: ${users}" th:action="@{register}" method="post">
+
+                    <tr >
                         <th scope="row" th:text="${user.id}">
                         </th>
                         <td th:text="${user.firstName}">
@@ -127,10 +133,13 @@
                         <td th:if="${user.roles.contains('ROLE_STUDENT')}" th:text="دانشجو">
                         </td>
                         <input type="hidden" name="id" id="id" th:value="${user.id}">
-                        <td><button type="submit" class="btn btn-dark col-sm-4 text-warning">تاٌیید</button></td>
+                        <td>
+                            <button type="submit" class="btn btn-dark col-sm-4 text-warning">تاٌیید</button>
+                        </td>
                     </tr>
-                    </tbody>
+
                 </form>
+                </tbody>
             </table>
         </main>
     </div>

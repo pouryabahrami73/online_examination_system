@@ -52,6 +52,10 @@
             </li>-->
         </ul>
     </div>
+    <form class="form-inline my-2 my-lg-0" th:action="@{/logout}">
+        <span class="navbar-brand mb-0 h1 text-warning" th:text="${#authentication.getName()}"></span>
+        <button class="btn btn-dark col-sm-4 text-warning" type="submit">خروج</button>
+    </form>
 </nav>
 <div class="container-fluid">
     <div class="row">

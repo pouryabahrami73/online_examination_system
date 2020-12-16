@@ -8,4 +8,5 @@ import java.util.List;
 public interface CourseService {
     Course save(Course course);
 
+    Course findById(Long id);
 }
