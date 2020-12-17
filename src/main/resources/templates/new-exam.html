@@ -59,11 +59,8 @@
             <form class="card-body" action="#" th:action="@{save-exam}" method="post">
                 <div class="form-group row">
                     <div class="col">
-                        <input type="text" class="form-control"  name="course" list="course"
-                               multiple placeholder="دوره">
-                        <datalist id="course">
-                            <option th:each="course: ${courses}" th:value="${course.id}" th:text="${course}">
-                        </datalist>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="عنوان">
+                        <input type="hidden" th:value="*{course}" class="form-control"  name="course" id="course">
                     </div>
                     <div class="col">
                         <input type="date" class="form-control" id="date" name="date" placeholder="تاریخ شروع">

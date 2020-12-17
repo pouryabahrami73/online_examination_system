@@ -79,4 +79,9 @@ public class MasterServiceImpl implements MasterService {
     public Exam saveExam(Exam exam) {
         return examService.save(exam);
     }
+
+    @Override
+    public void deleteExam(Exam exam) {
+        examService.deleteExam(exam);
+    }
 }

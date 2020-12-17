@@ -24,6 +24,8 @@ public class Exam extends BaseEntity<Long> {
     private int durationInMin;
     @Column(columnDefinition = "text")
     private String information;
+    @Column
+    private String title;
 
     public Exam() {
     }
@@ -73,5 +75,13 @@ public class Exam extends BaseEntity<Long> {
 
     public void setDurationInMin(int durationInMin) {
         this.durationInMin = durationInMin;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

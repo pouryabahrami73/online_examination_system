@@ -12,4 +12,6 @@ public interface ExamService {
     Optional<Exam> findById(Long id);
 
     Exam save(Exam exam);
+
+    void deleteExam(Exam exam);
 }

@@ -29,4 +29,9 @@ public class ExamServiceImpl implements ExamService {
     public Exam save(Exam exam) {
         return repository.save(exam);
     }
+
+    @Override
+    public void deleteExam(Exam exam) {
+        repository.delete(exam);
+    }
 }

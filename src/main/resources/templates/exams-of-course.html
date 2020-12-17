@@ -25,7 +25,8 @@
 <body class="bg-dark text-warning">
 <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
     <a class="navbar-brand text-warning" href="#">استاد</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -55,13 +56,20 @@
             </div>
         </nav>
         <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4" role="main">
+            <!--<div th:if="${massage.}" class="alert alert-warning alert-dismissible fade show text-center mx-auto w-40 p-3 bg-secondary" role="alert">
+                <strong th:text="${massage}"></strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>-->
             <table class="table table-striped table-dark text-warning">
                 <thead>
                 <tr>
-                    <th scope="col" colspan="4" th:text="${courseName}"></th>
+                    <th scope="col" colspan="4" th:text="${course.name}"></th>
                 </tr>
                 <tr>
                     <th scope="col">شناسه</th>
+                    <th scope="col">عنوان</th>
                     <th scope="col">تاریخ آزمون</th>
                     <th scope="col">زمان آزمون</th>
                     <th scope="col">وقت آزمون</th>
@@ -69,11 +77,13 @@
                     <th scope="col">عملیات</th>
                 </tr>
                 </thead>
-                <form class="card-body" action="#" th:action="@{exam-opeeration}" method="post">
-                    <tbody>
-                    <tr th:each="exam: ${exams}">
+                <tbody>
+                <form class="card-body" action="#" th:each="exam: ${exams}" th:action="@{edit-operation}" method="post">
+                    <tr>
                         <th scope="row" th:text="${exam.id}">
                         </th>
+                        <td th:text="${exam.title}">
+                        </td>
                         <td th:text="${exam.date}">
                         </td>
                         <td th:text="${exam.time}">
@@ -83,16 +93,21 @@
                         <td th:text="${exam.information}">
                         </td>
                         <input type="hidden" name="id" id="id" th:value="${exam.id}">
-                        <input type="hidden" name="course" id="course" th:value="${course}">
+                        <!--                        <input type="hidden" name="course" id="course" th:course="*{course}">-->
                         <td th:if="${exam.date.after(#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm'))}">
-                            <button type="submit" action="edit" class="btn btn-dark col-sm-4 text-warning">ویرایش</button>
-                            <button type="submit" action="delete" class="btn btn-dark col-sm-4 text-warning">حذف</button>
+                            <button type="submit" class="btn btn-dark col-sm-4 text-warning">ویرایش</button>
+                            <button type="submit" th:formaction="delete-operation"
+                                    class="btn btn-dark col-sm-4 text-warning">حذف
+                            </button>
                         </td>
                     </tr>
-                    </tbody>
                 </form>
+                </tbody>
             </table>
-            <a th:href="@{exam-operation}" class="btn btn-dark col-sm-4 text-warning">افزودن آزمون جدید</a>
+            <form class="card-body" action="#" th:action="@{new-exam}" method="post">
+                <input type="hidden" name="course" id="course" th:object="${course}">
+                <button type="submit" class="btn btn-dark col-sm-4 text-warning">افزودن آزمون جدید</button>
+            </form>
         </main>
     </div>
 </div>

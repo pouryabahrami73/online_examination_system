@@ -24,4 +24,6 @@ public interface MasterService {
     Exam findExamById(Long id);
 
     Exam saveExam(Exam exam);
+
+    void deleteExam(Exam exam);
 }
