@@ -4,10 +4,13 @@ import ir.pb.online_examination_system.domains.Course;
 import ir.pb.online_examination_system.domains.Exam;
 import ir.pb.online_examination_system.services.MasterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +33,6 @@ public class MasterController {
         Course course = service.findCourseById(id);
         model.addAttribute("course", course);
         List<Exam> exams = service.findExamsOfCourse(course);
-        model.addAttribute("course", course);
         model.addAttribute("exams", exams);
         return "exams-of-course";
     }
@@ -53,17 +55,17 @@ public class MasterController {
     }
 
     @PostMapping("/new-exam")
-    public String createNewExam(@ModelAttribute Course course, Model model){
-//        Course course = examOptional.get().getCourse();
-        model.addAttribute("course", course);
+    public String createNewExam(@ModelAttribute Optional<Course> courseOptional, Model model){
+        model.addAttribute("course", service.findCourseById(courseOptional.get().getId()));
         return "new-exam";
     }
 
+
     @PostMapping("/save-exam")
     public String createOrEditExam(@ModelAttribute Exam exam, Model model){
-        service.saveExam(exam);
         model.addAttribute("course", exam.getCourse());
-        model.addAttribute("exams", service.findExamsOfCourse(service.findCourseById(exam.getCourse().getId())));
+        service.saveExam(exam);
+        model.addAttribute("exams", service.findExamsOfCourse(exam.getCourse()));
         model.addAttribute("massage", "آزمون ذخیره شد!");
         return "exams-of-course";
     }

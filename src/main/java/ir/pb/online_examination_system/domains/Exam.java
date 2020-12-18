@@ -30,11 +30,13 @@ public class Exam extends BaseEntity<Long> {
     public Exam() {
     }
 
-    public Exam(Course course, Date date, Date time, int durationInMin) {
+    public Exam(Course course, Date date, Date time, int durationInMin, String information, String title) {
         this.course = course;
         this.date = date;
         this.time = time;
         this.durationInMin = durationInMin;
+        this.information = information;
+        this.title = title;
     }
 
     public String getInformation() {

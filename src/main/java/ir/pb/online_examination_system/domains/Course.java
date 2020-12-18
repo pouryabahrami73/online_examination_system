@@ -84,6 +84,6 @@ public class Course extends BaseEntity<Long> {
 
     @Override
     public String toString() {
-        return name + " " +  startDate + " " + finishDate;
+        return name + " | " +  startDate + " | " + finishDate;
     }
 }

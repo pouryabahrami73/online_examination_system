@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MyUserDetails implements UserDetails {
+//    private User user;
     private String userName;
     private String passWord;
     private boolean active;
@@ -58,4 +59,12 @@ public class MyUserDetails implements UserDetails {
     public boolean isEnabled() {
         return active;
     }
+
+    /*public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }*/
 }
