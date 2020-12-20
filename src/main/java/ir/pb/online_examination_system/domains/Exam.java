@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Exam extends BaseEntity<Long> {
@@ -26,6 +27,8 @@ public class Exam extends BaseEntity<Long> {
     private String information;
     @Column
     private String title;
+    @OneToMany(mappedBy = "exam")
+    private List<ExamQuestion> examQuestions;
 
     public Exam() {
     }
