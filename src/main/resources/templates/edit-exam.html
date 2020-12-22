@@ -64,7 +64,7 @@
                         <input type="hidden" id="id" th:field="${exam.id}">
                     </div>
                     <div class="col">
-                        <input type="date" class="form-control" id="date" name="date" th:placeholder="${exam.date}">
+                        <input type="date" class="form-control" id="date" name="date" th:value="${exam.date}" th:placeholder="${exam.date}">
                     </div>
                     <div class="col">
                         <input type="datetime-local" class="form-control" id="time" name="time"

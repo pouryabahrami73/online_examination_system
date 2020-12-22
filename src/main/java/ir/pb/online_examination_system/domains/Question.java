@@ -7,24 +7,16 @@ import java.util.List;
 
 @Entity
 public class Question extends BaseEntity<Long> {
-
     @Column(columnDefinition = "text")
     private String problem;
-
-    @OneToMany(mappedBy = "question")
-    private List<ExamQuestion> examQuestions;
-
     @Column
     private String title;
-
     @Column
-    private float mark;
-
+    private QuestionType type;
     @ElementCollection
     private List<String> alternatives;
-
     @Column
-    private String answer;
+    private String key;
 
     public Question() {
     }
@@ -37,28 +29,12 @@ public class Question extends BaseEntity<Long> {
         this.problem = problem;
     }
 
-    public List<ExamQuestion> getExamQuestions() {
-        return examQuestions;
-    }
-
-    public void setExamQuestions(List<ExamQuestion> examQuestions) {
-        this.examQuestions = examQuestions;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public float getMark() {
-        return mark;
-    }
-
-    public void setMark(float mark) {
-        this.mark = mark;
     }
 
     public List<String> getAlternatives() {
@@ -69,11 +45,19 @@ public class Question extends BaseEntity<Long> {
         this.alternatives = alternatives;
     }
 
-    public String getAnswer() {
-        return answer;
+    public QuestionType getType() {
+        return type;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setType(QuestionType type) {
+        this.type = type;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
