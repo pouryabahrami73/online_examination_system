@@ -11,6 +11,9 @@ public class ExamQuestion extends BaseEntity<Long> {
     @JoinColumn(name = "fk_exam")
     private Exam exam;
     @ManyToOne
+    @JoinColumn(name = "fk_course")
+    private Course course;
+    @ManyToOne
     @JoinColumn(name = "fk_question")
     private Question question;
     @Column
@@ -47,5 +50,13 @@ public class ExamQuestion extends BaseEntity<Long> {
 
     public void setMark(float mark) {
         this.mark = mark;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }

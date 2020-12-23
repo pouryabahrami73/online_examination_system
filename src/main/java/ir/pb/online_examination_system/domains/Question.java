@@ -16,7 +16,7 @@ public class Question extends BaseEntity<Long> {
     @ElementCollection
     private List<String> alternatives;
     @Column
-    private String key;
+    private String answerKey;
 
     public Question() {
     }
@@ -53,11 +53,11 @@ public class Question extends BaseEntity<Long> {
         this.type = type;
     }
 
-    public String getKey() {
-        return key;
+    public String getAnswerKey() {
+        return answerKey;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setAnswerKey(String answerKey) {
+        this.answerKey = answerKey;
     }
 }

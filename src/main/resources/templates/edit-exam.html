@@ -64,7 +64,7 @@
                         <input type="hidden" id="id" th:field="${exam.id}">
                     </div>
                     <div class="col">
-                        <input type="date" class="form-control" id="date" name="date" th:value="${exam.date}" th:placeholder="${exam.date}">
+                        <input type="date" class="form-control" id="date" name="date"  th:placeholder="${exam.date}">
                     </div>
                     <div class="col">
                         <input type="datetime-local" class="form-control" id="time" name="time"
@@ -83,6 +83,7 @@
                 </div>
                 <button type="submit" action="edit" class="btn btn-dark col-sm-4 text-warning">ویرایش</button>
             </form>
+            <a type="submit" action="edit" th:href="${exam.id}" class="btn btn-dark col-sm-4 text-warning">افزودن سوال</a>
         </main>
     </div>
 </div>

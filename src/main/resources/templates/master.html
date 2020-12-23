@@ -66,7 +66,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <form class="card-body" action="#" th:each="course: ${courses}" th:action="@{master/course-exams}" method="post">
+                <div class="card-body" action="#" th:each="course: ${courses}" method="post">
 
                     <tr>
                         <th scope="row" th:text="${course.id}">
@@ -78,10 +78,10 @@
                         <td th:text="${course.finishDate}">
                         </td>
                         <input type="hidden" name="id" id="id" th:value="${course.id}">
-                        <td><button type="submit" class="btn btn-dark col-sm-4 text-warning">آزمون ها</button></td>
+                        <td><a type="submit" th:href="@{master/course/{id}(id = ${course.id})}" class="btn btn-dark col-sm-4 text-warning">آزمون ها</a></td>
                     </tr>
 
-                </form>
+                </div>
                 </tbody>
             </table>
         </main>

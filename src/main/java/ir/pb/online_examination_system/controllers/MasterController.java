@@ -25,9 +25,8 @@ public class MasterController {
         return "master";
     }
 
-    @PostMapping("/course-exams")
-    public String showMyCourses(@ModelAttribute Optional<Course> optionalCourse, Model model) {
-        long id = optionalCourse.get().getId();
+    @GetMapping("/course/{id}")
+    public String showExamsOfCourse(@PathVariable Long id, Model model) {
         Course course = service.findCourseById(id);
         model.addAttribute("course", course);
         List<Exam> exams = service.findExamsOfCourse(course);
@@ -66,5 +65,11 @@ public class MasterController {
         model.addAttribute("exams", service.findExamsOfCourse(exam.getCourse()));
         model.addAttribute("massage", "آزمون ذخیره شد!");
         return "exams-of-course";
+    }
+
+    @GetMapping("/{id}")
+    public String questionAdder(@PathVariable Long id){
+        Exam exam = service.findExamById(id);
+        return "add-questions";
     }
 }
