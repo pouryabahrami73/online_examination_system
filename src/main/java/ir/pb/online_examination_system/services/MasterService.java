@@ -1,9 +1,6 @@
 package ir.pb.online_examination_system.services;
 
-import ir.pb.online_examination_system.domains.Course;
-import ir.pb.online_examination_system.domains.Exam;
-import ir.pb.online_examination_system.domains.Master;
-import ir.pb.online_examination_system.domains.User;
+import ir.pb.online_examination_system.domains.*;
 
 import java.util.List;
 
@@ -26,4 +23,6 @@ public interface MasterService {
     Exam saveExam(Exam exam);
 
     void deleteExam(Exam exam);
+
+    List<Question> findAllQuestionsOfCourse(Course course);
 }

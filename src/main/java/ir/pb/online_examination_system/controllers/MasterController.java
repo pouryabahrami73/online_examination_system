@@ -2,6 +2,7 @@ package ir.pb.online_examination_system.controllers;
 
 import ir.pb.online_examination_system.domains.Course;
 import ir.pb.online_examination_system.domains.Exam;
+import ir.pb.online_examination_system.domains.Question;
 import ir.pb.online_examination_system.services.MasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,9 +46,9 @@ public class MasterController {
         return "exams-of-course";
     }
 
-    @PostMapping("/edit-operation")
-    public String editExam(@ModelAttribute Optional<Exam> optionalExam, Model model){
-        model.addAttribute("exam", service.findExamById(optionalExam.get().getId()));
+    @GetMapping("/edit-exam/{id}")
+    public String editExam(@PathVariable Long id, Model model){
+        model.addAttribute("exam", service.findExamById(id));
         return "edit-exam";
     }
 
@@ -67,9 +68,10 @@ public class MasterController {
         return "exams-of-course";
     }
 
-    @GetMapping("/{id}")
-    public String questionAdder(@PathVariable Long id){
+    @GetMapping("/add-question-to-exam/{id}")
+    public String questionAdder(@PathVariable Long id, Model model){
         Exam exam = service.findExamById(id);
+        model.addAttribute("questions", service.findAllQuestionsOfCourse(exam.getCourse()));
         return "add-questions";
     }
 }

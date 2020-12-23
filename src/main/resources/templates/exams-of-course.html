@@ -81,8 +81,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <form class="card-body" action="#" th:each="exam: ${exams}" th:action="@{edit-operation}" method="post">
-                    <tr>
+                    <tr th:each="exam: ${exams}">
                         <th scope="row" th:text="${exam.id}">
                         </th>
                         <td th:text="${exam.title}">
@@ -95,16 +94,13 @@
                         </td>
                         <td th:text="${exam.information}">
                         </td>
-                        <input type="hidden" name="id" id="id" th:value="${exam.id}">
-                        <!--                        <input type="hidden" name="course" id="course" th:course="*{course}">-->
                         <td th:if="${exam.date.after(#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm'))}">
-                            <button type="submit" class="btn btn-dark col-sm-4 text-warning">ویرایش</button>
+                            <a type="submit" th:href="@{/master/edit-exam/{id}(id = ${exam.id})}" class="btn btn-dark col-sm-4 text-warning">ویرایش</a>
                             <button type="submit" th:formaction="delete-operation"
                                     class="btn btn-dark col-sm-4 text-warning">حذف
                             </button>
                         </td>
                     </tr>
-                </form>
                 </tbody>
             </table>
             <form class="card-body" action="#" th:action="@{new-exam}" method="post">

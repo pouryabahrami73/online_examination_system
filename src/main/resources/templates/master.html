@@ -66,9 +66,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <div class="card-body" action="#" th:each="course: ${courses}" method="post">
-
-                    <tr>
+                    <tr th:each="course: ${courses}">>
                         <th scope="row" th:text="${course.id}">
                         </th>
                         <td th:text="${course.name}">
@@ -80,8 +78,6 @@
                         <input type="hidden" name="id" id="id" th:value="${course.id}">
                         <td><a type="submit" th:href="@{master/course/{id}(id = ${course.id})}" class="btn btn-dark col-sm-4 text-warning">آزمون ها</a></td>
                     </tr>
-
-                </div>
                 </tbody>
             </table>
         </main>

@@ -1,22 +1,18 @@
 package ir.pb.online_examination_system.services.impl;
 
-import ir.pb.online_examination_system.domains.Course;
-import ir.pb.online_examination_system.domains.Exam;
-import ir.pb.online_examination_system.domains.Master;
-import ir.pb.online_examination_system.domains.User;
+import ir.pb.online_examination_system.domains.*;
 import ir.pb.online_examination_system.repositories.CourseRepository;
 import ir.pb.online_examination_system.repositories.MasterRepository;
 import ir.pb.online_examination_system.repositories.UserRepository;
-import ir.pb.online_examination_system.services.CourseService;
-import ir.pb.online_examination_system.services.ExamService;
-import ir.pb.online_examination_system.services.MasterService;
-import ir.pb.online_examination_system.services.UserService;
+import ir.pb.online_examination_system.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MasterServiceImpl implements MasterService {
@@ -31,6 +27,8 @@ public class MasterServiceImpl implements MasterService {
     private ExamService examService;
     @Autowired
     private Master master;
+    @Autowired
+    private ExamQuestionService examQuestionService;
     @Override
     public List<Master> masters() {
         return repository.findAll();
@@ -83,5 +81,14 @@ public class MasterServiceImpl implements MasterService {
     @Override
     public void deleteExam(Exam exam) {
         examService.deleteExam(exam);
+    }
+
+    @Override
+    public List<Question> findAllQuestionsOfCourse(Course course) {
+        List<Question> questions = new ArrayList<>();
+        examQuestionService.findAllExamQuestionsOfCourse(course)
+                .stream()
+                .forEach(examQuestion -> questions.add(examQuestion.getQuestion()));
+        return questions;
     }
 }
