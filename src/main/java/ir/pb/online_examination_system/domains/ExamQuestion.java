@@ -1,10 +1,12 @@
 package ir.pb.online_examination_system.domains;
 
 import ir.pb.online_examination_system.base.domians.BaseEntity;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
 @Entity
+@Component
 public class ExamQuestion extends BaseEntity<Long> {
 
     @ManyToOne

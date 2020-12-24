@@ -25,4 +25,8 @@ public interface MasterService {
     void deleteExam(Exam exam);
 
     List<Question> findAllQuestionsOfCourse(Course course);
+
+    ExamQuestion makeExamQuestion(Course course, Exam exam, Question question);
+
+    Question saveQuestion(Question question);
 }

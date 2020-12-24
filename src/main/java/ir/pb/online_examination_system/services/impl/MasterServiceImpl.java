@@ -29,6 +29,8 @@ public class MasterServiceImpl implements MasterService {
     private Master master;
     @Autowired
     private ExamQuestionService examQuestionService;
+    @Autowired
+    private QuestionService questionService;
     @Override
     public List<Master> masters() {
         return repository.findAll();
@@ -90,5 +92,15 @@ public class MasterServiceImpl implements MasterService {
                 .stream()
                 .forEach(examQuestion -> questions.add(examQuestion.getQuestion()));
         return questions;
+    }
+
+    @Override
+    public ExamQuestion makeExamQuestion(Course course, Exam exam, Question question) {
+        return examQuestionService.makeExamQuestion(course, exam, question);
+    }
+
+    @Override
+    public Question saveQuestion(Question question) {
+        return questionService.saveQuestion(question);
     }
 }
