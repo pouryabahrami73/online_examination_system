@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>اضافه کردن سوال</title>
+    <title>ظرح سوال</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
           integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
@@ -47,7 +47,7 @@
             <div class="sidebar-sticky pt-3">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active text-warning" th:href="@{master}">
+                        <a class="nav-link active text-warning" th:href="@{master/my-exames}">
                             آزمون های من
                             <span class="sr-only">(current)</span>
                         </a>
@@ -56,41 +56,40 @@
             </div>
         </nav>
         <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4" role="main">
-            <!--<div th:if="${massage.}" class="alert alert-warning alert-dismissible fade show text-center mx-auto w-40 p-3 bg-secondary" role="alert">
-                <strong th:text="${massage}"></strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>-->
-            <table class="table table-striped table-dark text-warning">
-                <thead>
-                <tr>
-                    <th scope="col" colspan="4" th:text="${course}"></th>
-                </tr>
-                <tr>
-                    <th scope="col">شناسه</th>
-                    <th scope="col">عنوان</th>
-                    <th scope="col">نوع</th>
-                    <th scope="col">صورت سوال</th>
-                    <th scope="col">جواب</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="question: ${questions}">
-                    <th scope="row" th:text="${question.id}">
-                    </th>
-                    <td th:text="${question.title}">
-                    </td>
-                    <td th:text="${question.type}">
-                    </td>
-                    <td th:text="${question.problem}">
-                    </td>
-                    <td th:text="${question.answerKey}">
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <a type="submit" th:href="@{/master/create-question-course/{id}(id = ${course.id})}" class="btn btn-dark col-sm-4 text-warning">طرح سوال جدید</a>
+            <form class="card-body" action="#" th:action="@{/master/save-question}" method="post">
+                <div class="form-group row">
+                    <div class="col">
+                        <select type="date" class="form-control" id="type" name="type" placeholder="نوع سوال">
+                            <option th:value="DESCRIPTIVE">تشریحی</option>
+                            <option th:value="MULTIPLE_CHOICES">تستی</option>
+                            <option th:value="TRUE_FALSE">صحیح و غلط</option>
+                            <option th:value="CONNECTIONS">اتصالی</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" id="title" name="title"
+                               placeholder="عنوان سوال">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        <input type="text" class="form-control" id="problem" name="problem" placeholder="صورت سوال">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        <input type="text" class="form-control" id="answerKey" name="answerKey" placeholder="کلید سوال">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        <input class="form-control" type="text" name="alternatives" id="alternatives" size="50"
+                               multiple placeholder="گزینه ها">
+                    </div>
+                </div>
+                <input type="hidden" id="course" name="course" th:value="${course.id}">
+                <button type="submit" action="edit" class="btn btn-dark col-sm-4 text-warning">ذخیره</button>
+            </form>
         </main>
     </div>
 </div>

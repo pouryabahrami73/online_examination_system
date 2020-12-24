@@ -47,20 +47,20 @@ public class MasterController {
     }
 
     @GetMapping("/edit-exam/{id}")
-    public String editExam(@PathVariable Long id, Model model){
+    public String editExam(@PathVariable Long id, Model model) {
         model.addAttribute("exam", service.findExamById(id));
         return "edit-exam";
     }
 
     @PostMapping("/new-exam")
-    public String createNewExam(@ModelAttribute Optional<Course> courseOptional, Model model){
+    public String createNewExam(@ModelAttribute Optional<Course> courseOptional, Model model) {
         model.addAttribute("course", service.findCourseById(courseOptional.get().getId()));
         return "new-exam";
     }
 
 
     @PostMapping("/save-exam")
-    public String createOrEditExam(@ModelAttribute Exam exam, Model model){
+    public String createOrEditExam(@ModelAttribute Exam exam, Model model) {
         model.addAttribute("course", exam.getCourse());
         service.saveExam(exam);
         model.addAttribute("exams", service.findExamsOfCourse(exam.getCourse()));
@@ -69,9 +69,23 @@ public class MasterController {
     }
 
     @GetMapping("/add-question-to-exam/{id}")
-    public String questionAdder(@PathVariable Long id, Model model){
+    public String questionAdder(@PathVariable Long id, Model model) {
         Exam exam = service.findExamById(id);
+        model.addAttribute("course", exam.getCourse());
         model.addAttribute("questions", service.findAllQuestionsOfCourse(exam.getCourse()));
+        return "add-questions";
+    }
+
+    @GetMapping("/create-question-course/{id}")
+    public String createQuestionForCourse(@PathVariable Long id, Model model) {
+        Course course = service.findCourseById(id);
+        model.addAttribute("course", course);
+        return "create-question";
+    }
+
+    @PostMapping("/save-question")
+    public String saveCreatedQuestion(@ModelAttribute Optional<Question> optionalQuestion, Model model){
+        Question question = optionalQuestion.get();
         return "add-questions";
     }
 }
