@@ -89,4 +89,12 @@ public class Exam extends BaseEntity<Long> {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public List<ExamQuestion> getExamQuestions() {
+        return examQuestions;
+    }
+
+    public void setExamQuestions(List<ExamQuestion> examQuestions) {
+        this.examQuestions = examQuestions;
+    }
 }

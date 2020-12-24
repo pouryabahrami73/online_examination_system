@@ -1,8 +1,6 @@
 package ir.pb.online_examination_system.controllers;
 
-import ir.pb.online_examination_system.domains.Course;
-import ir.pb.online_examination_system.domains.Exam;
-import ir.pb.online_examination_system.domains.Question;
+import ir.pb.online_examination_system.domains.*;
 import ir.pb.online_examination_system.services.MasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -71,21 +69,22 @@ public class MasterController {
     @GetMapping("/add-question-to-exam/{id}")
     public String questionAdder(@PathVariable Long id, Model model) {
         Exam exam = service.findExamById(id);
-        model.addAttribute("course", exam.getCourse());
+        model.addAttribute("exam", exam);
         model.addAttribute("questions", service.findAllQuestionsOfCourse(exam.getCourse()));
         return "add-questions";
     }
 
-    @GetMapping("/create-question-course/{id}")
+    @GetMapping("/create-question-exam/{id}")
     public String createQuestionForCourse(@PathVariable Long id, Model model) {
-        Course course = service.findCourseById(id);
-        model.addAttribute("course", course);
+        Exam exam = service.findExamById(id);
+        model.addAttribute("exam", exam);
         return "create-question";
     }
 
     @PostMapping("/save-question")
-    public String saveCreatedQuestion(@ModelAttribute Optional<Question> optionalQuestion, Model model){
-        Question question = optionalQuestion.get();
+    public String saveCreatedQuestion(@ModelAttribute ExamQuestionDTO examQuestionDTO, Model model){
+        Question question = examQuestionDTO;
+        Exam exam = service.findExamById(examQuestionDTO.getExamId());
         return "add-questions";
     }
 }
