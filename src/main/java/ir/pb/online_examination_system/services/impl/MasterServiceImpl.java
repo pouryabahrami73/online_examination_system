@@ -84,9 +84,9 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
-    public List<Question> findAllQuestionsOfCourse(Course course) {
+    public List<Question> findAllQuestionsOfCourse(String courseName) {
         List<Question> questions = new ArrayList<>();
-        examQuestionService.findAllExamQuestionsOfCourse(course)
+        examQuestionService.findAllExamQuestionsOfCourse(courseName)
                 .stream()
                 .forEach(examQuestion -> {
                     if(!questions.contains(examQuestion.getQuestion())){
@@ -97,8 +97,8 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
-    public ExamQuestion makeExamQuestion(Course course, Exam exam, Question question, Float mark) {
-        return examQuestionService.makeExamQuestion(course, exam, question, mark);
+    public ExamQuestion makeExamQuestion(String courseName, Exam exam, Question question, Float mark) {
+        return examQuestionService.makeExamQuestion(courseName, exam, question, mark);
     }
 
     @Override
@@ -127,5 +127,25 @@ public class MasterServiceImpl implements MasterService {
                 .stream()
                 .forEach(examQuestion -> upToNowMarks.updateAndGet(v -> new Float((float) (v + examQuestion.getMark()))));
         return upToNowMarks.get();
+    }
+
+    @Override
+    public Question findQuestionById(Long questionId) {
+        return questionService.findById(questionId);
+    }
+
+    @Override
+    public void deleteExamQuestionByQuestionAndExam(Question question, Exam exam) {
+        examQuestionService.deleteByQuestionAndExam(question, exam);
+    }
+
+    @Override
+    public ExamQuestion findExamQuestionByQuestionAndExam(Question question, Exam exam) {
+        return examQuestionService.findExamQuestionByQuestionAndExam(question, exam);
+    }
+
+    @Override
+    public void deleteExamQuestion(ExamQuestion examQuestion) {
+        examQuestionService.delete(examQuestion);
     }
 }

@@ -14,4 +14,9 @@ public class QuestionServiceImpl implements QuestionService {
     public Question saveQuestion(Question question) {
         return repository.save(question);
     }
+
+    @Override
+    public Question findById(Long questionId) {
+        return repository.findById(questionId).get();
+    }
 }

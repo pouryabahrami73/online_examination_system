@@ -71,19 +71,21 @@ public class MasterController {
     public String showQuestions(@PathVariable Long id, Model model) {
         Exam exam = service.findExamById(id);
         model.addAttribute("exam", exam);
-        questions(model, exam.getCourse(), exam);
+        questions(model, exam.getCourse().getName(), exam);
 //        model.addAttribute("questions", service.findAllQuestionsOfCourse(exam.getCourse()));
 //        model.addAttribute("questionsOfExam", service.findAllQuestionsOfExam(exam));
         return "add-questions";
     }
 
-    public void questions(Model model, Course course, Exam exam){
-        List<Question> questions = service.findAllQuestionsOfCourse(course);
+    public void questions(Model model, String courseName, Exam exam){
+        List<Question> questions = service.findAllQuestionsOfCourse(courseName);
         List<Question> questionsOfExam = service.findAllQuestionsOfExam(exam);
         model.addAttribute("questions", questions
                 .stream()
                 .filter(question -> !questionsOfExam.contains(question)).collect(Collectors.toList()));
         model.addAttribute("questionsOfExam", questionsOfExam);
+        model.addAttribute("exam", exam);
+        model.addAttribute("courseName", courseName);
     }
 
     @PostMapping("/add-stored-question-to-exma")
@@ -94,7 +96,7 @@ public class MasterController {
         }else{
             model.addAttribute("gradeError", "مجموع نمرات سوالات بیش از مجموع نمره آزمون است!");
         }
-        questions(model, examQuestion.getCourse(), examQuestion.getExam());
+        questions(model, examQuestion.getCourseName(), examQuestion.getExam());
         return "add-questions";
     }
 
@@ -109,13 +111,25 @@ public class MasterController {
     public String saveCreatedQuestion(@ModelAttribute Exam exam, Question question, Float mark, Model model) {
         question.setId(null);
         service.saveQuestion(question);
-        ExamQuestion examQuestion = service.makeExamQuestion(service.findExamById(exam.getId()).getCourse()
+        Exam exam1 = service.findExamById(exam.getId());
+        ExamQuestion examQuestion = service.makeExamQuestion(exam1.getCourse().getName()
                 , service.findExamById(exam.getId())
                 , question, mark);
         service.saveExamQuestion(examQuestion);
-        questions(model, exam.getCourse(), exam);
+        questions(model, exam1.getCourse().getName(), exam1);
 //        model.addAttribute("exam", exam);
 //        model.addAttribute("questions", service.findAllQuestionsOfCourse(exam.getCourse()));
+        return "add-questions";
+    }
+
+    @GetMapping("/delete-question-from-exam/{questionId}/{examId}")
+    public String deleteQuestionFromExam(@PathVariable Long questionId, @PathVariable Long examId, Model model){
+        Exam exam = service.findExamById(examId);
+        Question question = service.findQuestionById(questionId);
+//        service.deleteExamQuestionByQuestionAndExam(question, exam);
+        ExamQuestion examQuestion = service.findExamQuestionByQuestionAndExam(question, exam);
+        service.deleteExamQuestion(examQuestion);
+        questions(model, exam.getCourse().getName(), exam);
         return "add-questions";
     }
 }

@@ -93,7 +93,7 @@
                               method="post">
                             <input type="hidden" id="question" name="question" th:value="${question.id}">
                             <input type="hidden" id="exam" name="exam" th:value="${exam.id}">
-                            <input type="hidden" id="course" name="course" th:value="${exam.course.id}">
+                            <input type="hidden" id="courseName" name="courseName" th:value="${courseName}">
                             <input type="text" class="form-control" id="mark" name="mark" placeholder="نمره">
                             <button type="submit" class="btn btn-dark col-sm-4 text-warning">افزودن</button>
                         </form>
@@ -112,6 +112,7 @@
                     <th scope="col">نوع</th>
                     <th scope="col">صورت سوال</th>
                     <th scope="col">جواب</th>
+                    <th scope="col">حذف</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -125,6 +126,11 @@
                     <td th:text="${question.problem}">
                     </td>
                     <td th:text="${question.answerKey}">
+                    </td>
+                    <td>
+                        <a type="submit"
+                           th:href="@{/master/delete-question-from-exam/{questionId}/{examId}(questionId = ${question.id}, examId = ${exam.id})}"
+                           class="btn btn-dark col-sm-4 text-warning">حذف</a>
                     </td>
                 </tr>
                 </tbody>

@@ -19,13 +19,13 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
     @Autowired
     private ExamQuestion examQuestion;
     @Override
-    public List<ExamQuestion> findAllExamQuestionsOfCourse(Course course) {
-        return repository.findAllByCourse(course).stream().collect(Collectors.toList());
+    public List<ExamQuestion> findAllExamQuestionsOfCourse(String courseName) {
+        return repository.findAllByCourseName(courseName).stream().collect(Collectors.toList());
     }
 
     @Override
-    public ExamQuestion makeExamQuestion(Course course, Exam exam, Question question, Float mark) {
-        examQuestion.setCourse(course);
+    public ExamQuestion makeExamQuestion(String courseName, Exam exam, Question question, Float mark) {
+        examQuestion.setCourseName(courseName);
         examQuestion.setExam(exam);
         examQuestion.setQuestion(question);
         examQuestion.setMark(mark);
@@ -40,5 +40,20 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
     @Override
     public List<ExamQuestion> findAllQuestionsOfExam(Exam exam) {
         return repository.findAllByExam(exam).stream().collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteByQuestionAndExam(Question question, Exam exam) {
+        repository.removeByQuestionAndExam(question, exam);
+    }
+
+    @Override
+    public ExamQuestion findExamQuestionByQuestionAndExam(Question question, Exam exam) {
+        return repository.findByQuestionAndExam(question, exam);
+    }
+
+    @Override
+    public void delete(ExamQuestion examQuestion) {
+        repository.delete(examQuestion);
     }
 }

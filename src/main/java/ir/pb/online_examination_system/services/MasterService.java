@@ -24,9 +24,9 @@ public interface MasterService {
 
     void deleteExam(Exam exam);
 
-    List<Question> findAllQuestionsOfCourse(Course course);
+    List<Question> findAllQuestionsOfCourse(String courseName);
 
-    ExamQuestion makeExamQuestion(Course course, Exam exam, Question question, Float mark);
+    ExamQuestion makeExamQuestion(String courseName, Exam exam, Question question, Float mark);
 
     Question saveQuestion(Question question);
 
@@ -35,4 +35,12 @@ public interface MasterService {
     List<Question> findAllQuestionsOfExam(Exam exam);
 
     float sumOfMarksUpToNow(Exam exam);
+
+    Question findQuestionById(Long questionId);
+
+    void deleteExamQuestionByQuestionAndExam(Question question, Exam exam);
+
+    ExamQuestion findExamQuestionByQuestionAndExam(Question question, Exam exam);
+
+    void deleteExamQuestion(ExamQuestion examQuestion);
 }

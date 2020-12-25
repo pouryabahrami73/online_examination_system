@@ -9,11 +9,17 @@ import java.util.List;
 
 public interface ExamQuestionService {
 
-    List<ExamQuestion> findAllExamQuestionsOfCourse(Course course);
+    List<ExamQuestion> findAllExamQuestionsOfCourse(String courseName);
 
-    ExamQuestion makeExamQuestion(Course course, Exam exam, Question question, Float mark);
+    ExamQuestion makeExamQuestion(String courseName, Exam exam, Question question, Float mark);
 
     ExamQuestion save(ExamQuestion examQuestion);
 
     List<ExamQuestion> findAllQuestionsOfExam(Exam exam);
+
+    void deleteByQuestionAndExam(Question question, Exam exam);
+
+    ExamQuestion findExamQuestionByQuestionAndExam(Question question, Exam exam);
+
+    void delete(ExamQuestion examQuestion);
 }
