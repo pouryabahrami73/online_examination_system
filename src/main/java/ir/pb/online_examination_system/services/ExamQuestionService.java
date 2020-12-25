@@ -11,7 +11,9 @@ public interface ExamQuestionService {
 
     List<ExamQuestion> findAllExamQuestionsOfCourse(Course course);
 
-    ExamQuestion makeExamQuestion(Course course, Exam exam, Question question);
+    ExamQuestion makeExamQuestion(Course course, Exam exam, Question question, Float mark);
 
     ExamQuestion save(ExamQuestion examQuestion);
+
+    List<ExamQuestion> findAllQuestionsOfExam(Exam exam);
 }

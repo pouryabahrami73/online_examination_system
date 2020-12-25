@@ -1,9 +1,7 @@
 package ir.pb.online_examination_system.services.impl;
 
 import ir.pb.online_examination_system.domains.*;
-import ir.pb.online_examination_system.repositories.CourseRepository;
 import ir.pb.online_examination_system.repositories.MasterRepository;
-import ir.pb.online_examination_system.repositories.UserRepository;
 import ir.pb.online_examination_system.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -12,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class MasterServiceImpl implements MasterService {
@@ -90,13 +88,17 @@ public class MasterServiceImpl implements MasterService {
         List<Question> questions = new ArrayList<>();
         examQuestionService.findAllExamQuestionsOfCourse(course)
                 .stream()
-                .forEach(examQuestion -> questions.add(examQuestion.getQuestion()));
+                .forEach(examQuestion -> {
+                    if(!questions.contains(examQuestion.getQuestion())){
+                        questions.add(examQuestion.getQuestion());
+                    }
+                });
         return questions;
     }
 
     @Override
-    public ExamQuestion makeExamQuestion(Course course, Exam exam, Question question) {
-        return examQuestionService.makeExamQuestion(course, exam, question);
+    public ExamQuestion makeExamQuestion(Course course, Exam exam, Question question, Float mark) {
+        return examQuestionService.makeExamQuestion(course, exam, question, mark);
     }
 
     @Override
@@ -107,5 +109,23 @@ public class MasterServiceImpl implements MasterService {
     @Override
     public ExamQuestion saveExamQuestion(ExamQuestion examQuestion) {
         return examQuestionService.save(examQuestion);
+    }
+
+    @Override
+    public List<Question> findAllQuestionsOfExam(Exam exam) {
+        List<Question> questions = new ArrayList<>();
+        examQuestionService.findAllQuestionsOfExam(exam)
+                .stream()
+                .forEach(examQuestion -> questions.add(examQuestion.getQuestion()));
+        return questions;
+    }
+
+    @Override
+    public float sumOfMarksUpToNow(Exam exam) {
+        AtomicReference<Float> upToNowMarks = new AtomicReference<>((float) 0);
+        examQuestionService.findAllQuestionsOfExam(exam)
+                .stream()
+                .forEach(examQuestion -> upToNowMarks.updateAndGet(v -> new Float((float) (v + examQuestion.getMark()))));
+        return upToNowMarks.get();
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/master")
@@ -67,10 +68,33 @@ public class MasterController {
     }
 
     @GetMapping("/add-question-to-exam/{id}")
-    public String questionAdder(@PathVariable Long id, Model model) {
+    public String showQuestions(@PathVariable Long id, Model model) {
         Exam exam = service.findExamById(id);
         model.addAttribute("exam", exam);
-        model.addAttribute("questions", service.findAllQuestionsOfCourse(exam.getCourse()));
+        questions(model, exam.getCourse(), exam);
+//        model.addAttribute("questions", service.findAllQuestionsOfCourse(exam.getCourse()));
+//        model.addAttribute("questionsOfExam", service.findAllQuestionsOfExam(exam));
+        return "add-questions";
+    }
+
+    public void questions(Model model, Course course, Exam exam){
+        List<Question> questions = service.findAllQuestionsOfCourse(course);
+        List<Question> questionsOfExam = service.findAllQuestionsOfExam(exam);
+        model.addAttribute("questions", questions
+                .stream()
+                .filter(question -> !questionsOfExam.contains(question)).collect(Collectors.toList()));
+        model.addAttribute("questionsOfExam", questionsOfExam);
+    }
+
+    @PostMapping("/add-stored-question-to-exma")
+    public String addQuestionToExam(@ModelAttribute ExamQuestion examQuestion, Model model){
+        if(service.sumOfMarksUpToNow(examQuestion.getExam()) + examQuestion.getMark()
+                <= examQuestion.getExam().getGrade()){
+            service.saveExamQuestion(examQuestion);
+        }else{
+            model.addAttribute("gradeError", "مجموع نمرات سوالات بیش از مجموع نمره آزمون است!");
+        }
+        questions(model, examQuestion.getCourse(), examQuestion.getExam());
         return "add-questions";
     }
 
@@ -82,15 +106,16 @@ public class MasterController {
     }
 
     @PostMapping("/save-question")
-    public String saveCreatedQuestion(@ModelAttribute Exam exam, @ModelAttribute Question question, Model model) {
+    public String saveCreatedQuestion(@ModelAttribute Exam exam, Question question, Float mark, Model model) {
         question.setId(null);
         service.saveQuestion(question);
         ExamQuestion examQuestion = service.makeExamQuestion(service.findExamById(exam.getId()).getCourse()
                 , service.findExamById(exam.getId())
-                , question);
+                , question, mark);
         service.saveExamQuestion(examQuestion);
-        model.addAttribute("exam", exam);
-        model.addAttribute("questions", service.findAllQuestionsOfCourse(exam.getCourse()));
+        questions(model, exam.getCourse(), exam);
+//        model.addAttribute("exam", exam);
+//        model.addAttribute("questions", service.findAllQuestionsOfCourse(exam.getCourse()));
         return "add-questions";
     }
 }

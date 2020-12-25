@@ -29,6 +29,8 @@ public class Exam extends BaseEntity<Long> {
     private String title;
     @OneToMany(mappedBy = "exam")
     private List<ExamQuestion> examQuestions;
+    @Column
+    private int grade;
 
     public Exam() {
     }
@@ -90,11 +92,24 @@ public class Exam extends BaseEntity<Long> {
         this.title = title;
     }
 
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
+    }
+
     public List<ExamQuestion> getExamQuestions() {
         return examQuestions;
     }
 
     public void setExamQuestions(List<ExamQuestion> examQuestions) {
         this.examQuestions = examQuestions;
+    }
+
+    @Override
+    public String toString() {
+        return course + " | " + title + " | " + date + " " + time + " | " + durationInMin + "min";
     }
 }

@@ -73,6 +73,7 @@
                     <th scope="col">نوع</th>
                     <th scope="col">صورت سوال</th>
                     <th scope="col">جواب</th>
+                    <th scope="col">افزودن سوال</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -87,10 +88,49 @@
                     </td>
                     <td th:text="${question.answerKey}">
                     </td>
+                    <td>
+                        <form class="card-body" action="#" th:action="@{/master/add-stored-question-to-exma}"
+                              method="post">
+                            <input type="hidden" id="question" name="question" th:value="${question.id}">
+                            <input type="hidden" id="exam" name="exam" th:value="${exam.id}">
+                            <input type="hidden" id="course" name="course" th:value="${exam.course.id}">
+                            <input type="text" class="form-control" id="mark" name="mark" placeholder="نمره">
+                            <button type="submit" class="btn btn-dark col-sm-4 text-warning">افزودن</button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
-            <a type="submit" th:href="@{/master/create-question-exam/{id}(id = ${exam.id})}" class="btn btn-dark col-sm-4 text-warning">طرح سوال جدید</a>
+            <table class="table table-striped table-dark text-warning">
+                <thead>
+                <tr>
+                    <th scope="col" colspan="4">سوالات این آزمون</th>
+                </tr>
+                <tr>
+                    <th scope="col">شناسه</th>
+                    <th scope="col">عنوان</th>
+                    <th scope="col">نوع</th>
+                    <th scope="col">صورت سوال</th>
+                    <th scope="col">جواب</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="question: ${questionsOfExam}">
+                    <th scope="row" th:text="${question.id}">
+                    </th>
+                    <td th:text="${question.title}">
+                    </td>
+                    <td th:text="${question.type}">
+                    </td>
+                    <td th:text="${question.problem}">
+                    </td>
+                    <td th:text="${question.answerKey}">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <a type="submit" th:href="@{/master/create-question-exam/{id}(id = ${exam.id})}"
+               class="btn btn-dark col-sm-4 text-warning">طرح سوال جدید</a>
         </main>
     </div>
 </div>

@@ -7,10 +7,10 @@ import ir.pb.online_examination_system.domains.Question;
 import ir.pb.online_examination_system.repositories.ExamQuestionRepository;
 import ir.pb.online_examination_system.services.ExamQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ExamQuestionServiceImpl implements ExamQuestionService {
@@ -20,19 +20,25 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
     private ExamQuestion examQuestion;
     @Override
     public List<ExamQuestion> findAllExamQuestionsOfCourse(Course course) {
-        return repository.findAllByCourse(course);
+        return repository.findAllByCourse(course).stream().collect(Collectors.toList());
     }
 
     @Override
-    public ExamQuestion makeExamQuestion(Course course, Exam exam, Question question) {
+    public ExamQuestion makeExamQuestion(Course course, Exam exam, Question question, Float mark) {
         examQuestion.setCourse(course);
         examQuestion.setExam(exam);
         examQuestion.setQuestion(question);
+        examQuestion.setMark(mark);
         return examQuestion;
     }
 
     @Override
     public ExamQuestion save(ExamQuestion examQuestion) {
         return repository.save(examQuestion);
+    }
+
+    @Override
+    public List<ExamQuestion> findAllQuestionsOfExam(Exam exam) {
+        return repository.findAllByExam(exam).stream().collect(Collectors.toList());
     }
 }

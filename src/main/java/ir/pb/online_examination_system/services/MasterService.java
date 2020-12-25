@@ -26,9 +26,13 @@ public interface MasterService {
 
     List<Question> findAllQuestionsOfCourse(Course course);
 
-    ExamQuestion makeExamQuestion(Course course, Exam exam, Question question);
+    ExamQuestion makeExamQuestion(Course course, Exam exam, Question question, Float mark);
 
     Question saveQuestion(Question question);
 
     ExamQuestion saveExamQuestion(ExamQuestion examQuestion);
+
+    List<Question> findAllQuestionsOfExam(Exam exam);
+
+    float sumOfMarksUpToNow(Exam exam);
 }
