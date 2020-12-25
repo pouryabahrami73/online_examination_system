@@ -30,4 +30,9 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
         examQuestion.setQuestion(question);
         return examQuestion;
     }
+
+    @Override
+    public ExamQuestion save(ExamQuestion examQuestion) {
+        return repository.save(examQuestion);
+    }
 }

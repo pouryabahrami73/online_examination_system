@@ -1,11 +1,13 @@
 package ir.pb.online_examination_system.domains;
 
 import ir.pb.online_examination_system.base.domians.BaseEntity;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+
 public class Question extends BaseEntity<Long> {
     @Column(columnDefinition = "text")
     private String problem;

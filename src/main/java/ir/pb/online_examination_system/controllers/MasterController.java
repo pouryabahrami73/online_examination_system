@@ -82,11 +82,15 @@ public class MasterController {
     }
 
     @PostMapping("/save-question")
-    public String saveCreatedQuestion(@ModelAttribute ExamQuestionDTO examQuestionDTO, Model model){
-        Question question = examQuestionDTO;
+    public String saveCreatedQuestion(@ModelAttribute Exam exam, @ModelAttribute Question question, Model model) {
+        question.setId(null);
         service.saveQuestion(question);
-        Exam exam = service.findExamById(examQuestionDTO.getExamId());
-        ExamQuestion examQuestion = service.makeExamQuestion(exam.getCourse(), exam, question);
+        ExamQuestion examQuestion = service.makeExamQuestion(service.findExamById(exam.getId()).getCourse()
+                , service.findExamById(exam.getId())
+                , question);
+        service.saveExamQuestion(examQuestion);
+        model.addAttribute("exam", exam);
+        model.addAttribute("questions", service.findAllQuestionsOfCourse(exam.getCourse()));
         return "add-questions";
     }
 }

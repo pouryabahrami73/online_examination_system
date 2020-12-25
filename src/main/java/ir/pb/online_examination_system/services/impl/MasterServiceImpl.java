@@ -103,4 +103,9 @@ public class MasterServiceImpl implements MasterService {
     public Question saveQuestion(Question question) {
         return questionService.saveQuestion(question);
     }
+
+    @Override
+    public ExamQuestion saveExamQuestion(ExamQuestion examQuestion) {
+        return examQuestionService.save(examQuestion);
+    }
 }

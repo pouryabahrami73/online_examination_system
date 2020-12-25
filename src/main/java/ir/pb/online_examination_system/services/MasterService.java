@@ -29,4 +29,6 @@ public interface MasterService {
     ExamQuestion makeExamQuestion(Course course, Exam exam, Question question);
 
     Question saveQuestion(Question question);
+
+    ExamQuestion saveExamQuestion(ExamQuestion examQuestion);
 }
