@@ -54,6 +54,7 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
 
     @Override
     public void delete(ExamQuestion examQuestion) {
-        repository.delete(examQuestion);
+        examQuestion.setExam(null);
+        repository.save(examQuestion);
     }
 }
