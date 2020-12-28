@@ -1,3 +1,4 @@
+/*
 package ir.pb.online_examination_system.config;
 
 import org.springframework.context.annotation.Configuration;
@@ -12,3 +13,4 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 }
+*/

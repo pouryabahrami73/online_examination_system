@@ -1,11 +1,13 @@
 package ir.pb.online_examination_system.repositories;
 
 import ir.pb.online_examination_system.domains.Student;
-import ir.pb.online_examination_system.domains.User;
+import ir.pb.online_examination_system.domains.StudentExam;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Long> {
-    Student findByUser(User studentUser);
+public interface StudentExamRepository extends JpaRepository<StudentExam, Long> {
+    List<StudentExam> findAllByStudent(Student student);
 }

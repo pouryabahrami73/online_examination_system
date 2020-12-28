@@ -27,7 +27,7 @@
 </head>
 <body class="bg-dark text-warning">
 <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-    <a class="navbar-brand text-warning" href="#">استاد</a>
+    <a class="navbar-brand text-warning" href="#">دانشجو</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -50,7 +50,7 @@
             <div class="sidebar-sticky pt-3">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active text-warning" th:href="@{master}">
+                        <a class="nav-link active text-warning" th:href="@{student}">
                             آزمون های من
                             <span class="sr-only">(current)</span>
                         </a>
@@ -81,32 +81,28 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="exam: ${exams}">
-                        <th scope="row" th:text="${exam.id}">
-                        </th>
-                        <td th:text="${exam.title}">
-                        </td>
-                        <td th:text="${exam.date}">
-                        </td>
-                        <td th:text="${exam.time}">
-                        </td>
-                        <td th:text="${exam.durationInMin}">
-                        </td>
-                        <td th:text="${exam.information}">
-                        </td>
-                        <td th:if="${exam.date.after(#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm'))}">
-                            <a type="submit" th:href="@{/master/edit-exam/{id}(id = ${exam.id})}" class="btn btn-dark col-sm-4 text-warning">ویرایش</a>
-                            <button type="submit" th:formaction="delete-operation"
-                                    class="btn btn-dark col-sm-4 text-warning">حذف
-                            </button>
-                        </td>
-                    </tr>
+                <tr th:each="exam: ${exams}">
+                    <th scope="row" th:text="${exam.id}">
+                    </th>
+                    <td th:text="${exam.title}">
+                    </td>
+                    <td th:text="${exam.date}">
+                    </td>
+                    <td th:text="${exam.time}">
+                    </td>
+                    <td th:text="${exam.durationInMin}">
+                    </td>
+                    <td th:text="${exam.information}">
+                    </td>
+                    <td th:if="${exam.date.after(#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm'))}">
+                        <a type="submit" th:href="@{/master/edit-exam/{id}(id = ${exam.id})}" class="btn btn-dark col-sm-4 text-warning">ویرایش</a>
+                        <button type="submit" th:formaction="delete-operation"
+                                class="btn btn-dark col-sm-4 text-warning">شرکت در آزمون
+                        </button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
-            <form class="card-body" action="#" th:action="@{new-exam}" method="post">
-                <input type="hidden" name="id" th:field="${course.id}">
-                <button type="submit" class="btn btn-dark col-sm-4 text-warning">افزودن آزمون جدید</button>
-            </form>
         </main>
     </div>
 </div>

@@ -16,6 +16,8 @@ public class Student extends BaseEntity<Long> {
     private User user;
     @ManyToMany(mappedBy = "students",cascade = CascadeType.ALL)
     private List<Course> courses;
+    @OneToMany(mappedBy = "student")
+    private List<StudentExam> studentExams;
 
     public Student() {
     }
@@ -34,6 +36,14 @@ public class Student extends BaseEntity<Long> {
 
     public void setCourses(List<Course> courses) {
         this.courses = courses;
+    }
+
+    public List<StudentExam> getStudentExams() {
+        return studentExams;
+    }
+
+    public void setStudentExams(List<StudentExam> studentExams) {
+        this.studentExams = studentExams;
     }
 
     @Override
