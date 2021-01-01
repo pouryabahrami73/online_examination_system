@@ -1,7 +1,22 @@
 $(document).ready(function () {
     let quest = document.getElementById("question");
     if (questions[0].type === 'MULTIPLE_CHOICE') {
-        console.log('salam')
+        $(quest).append(`
+            <div id="question-problem">${questions[0].problem}
+                <div id="answer-div" class="form-check">
+                `)
+        for (i = 0; i < questions[0].alternatives.length; i++){
+            $(quest).append(`
+                    <input class="form-check-input" type="radio" name="answer" id="alternative + ${i}"
+                        value="${i + 1}" checked>
+                            <label class="form-check-label" for="alternative + ${i}">
+                                ${i + 1}. ${questions[0].alternatives[i]}
+                            </label>
+                            <br>
+                    </div>
+                </div>
+            `)
+        }
     } else {
         $(quest).append(`
                     <div id="question-problem">${questions[0].problem}
@@ -24,7 +39,22 @@ function htmlMaker(x){
         quest.removeChild(quest.firstChild);
     }
     if (questions[x].type == "MULTIPLE_CHOICES") {
-        console.log('salam')
+        $(quest).append(`
+            <div id="question-problem">${questions[x].problem}
+                <div id="answer-div" class="form-check">
+                `)
+        for (i = 0; i < questions[x].alternatives.length; i++){
+            $(quest).append(`
+                    <input class="form-check-input" type="radio" name="answer" id="alternative + ${i}"
+                        value="${questions[x].alternatives[i]}" checked>
+                            <label class="form-check-label" for="alternative + ${i}">
+                                ${i + 1}. ${questions[x].alternatives[i]}
+                            </label>
+                            <br>
+                    </div>
+                </div>
+            `)
+        }
     } else {
         console.log(questions[x].type);
         $(quest).append(`

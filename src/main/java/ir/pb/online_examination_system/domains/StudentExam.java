@@ -3,10 +3,7 @@ package ir.pb.online_examination_system.domains;
 import ir.pb.online_examination_system.base.domians.BaseEntity;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 @Component
@@ -19,6 +16,9 @@ public class StudentExam extends BaseEntity<Long> {
     @ManyToOne
     @JoinColumn(name = "fk_student")
     private Student student;
+    /*@OneToOne
+    @JoinColumn(name = "fk_examSheet")
+    private ExamSheet examSheet;*/
     @Column
     private float grade;
 
@@ -38,6 +38,14 @@ public class StudentExam extends BaseEntity<Long> {
     public void setExam(Exam exam) {
         this.exam = exam;
     }
+
+    /*public ExamSheet getExamSheet() {
+        return examSheet;
+    }
+
+    public void setExamSheet(ExamSheet examSheet) {
+        this.examSheet = examSheet;
+    }*/
 
     public Student getStudent() {
         return student;
