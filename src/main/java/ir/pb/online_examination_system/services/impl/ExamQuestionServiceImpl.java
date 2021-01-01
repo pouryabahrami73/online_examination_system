@@ -16,8 +16,6 @@ import java.util.stream.Collectors;
 public class ExamQuestionServiceImpl implements ExamQuestionService {
     @Autowired
     private ExamQuestionRepository repository;
-    @Autowired
-    private ExamQuestion examQuestion;
     @Override
     public List<ExamQuestion> findAllExamQuestionsOfCourse(String courseName) {
         return repository.findAllByCourseName(courseName).stream().collect(Collectors.toList());
@@ -25,6 +23,7 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
 
     @Override
     public ExamQuestion makeExamQuestion(String courseName, Exam exam, Question question, Float mark) {
+        ExamQuestion examQuestion = new ExamQuestion();
         examQuestion.setCourseName(courseName);
         examQuestion.setExam(exam);
         examQuestion.setQuestion(question);

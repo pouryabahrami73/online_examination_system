@@ -2,6 +2,7 @@ package ir.pb.online_examination_system.controllers;
 
 import ir.pb.online_examination_system.domains.Course;
 import ir.pb.online_examination_system.domains.Exam;
+import ir.pb.online_examination_system.domains.Question;
 import ir.pb.online_examination_system.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,5 +41,15 @@ public class StudentController {
                 .collect(Collectors.toList());
         model.addAttribute("exams", exams);
         return "student-exams-of-course";
+    }
+
+    @GetMapping("/take-exam/{id}")
+    public String startExam(@PathVariable Long id, Model model){
+        Exam exam = service.findExamById(id);
+        List<Question> questions = new ArrayList<>();
+        exam.getExamQuestions().stream().forEach(examQuestion -> questions.add(examQuestion.getQuestion()));
+        model.addAttribute("exam", exam);
+        model.addAttribute("questions", questions);
+        return "exam";
     }
 }

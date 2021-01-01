@@ -79,4 +79,9 @@ public class StudentServiceImpl implements StudentService {
         studentExamService.findStudentExams(student).stream().forEach(studentExam -> exams.add(studentExam.getExam()));
         return exams;
     }
+
+    @Override
+    public Exam findExamById(Long id) {
+        return examService.findById(id).get();
+    }
 }

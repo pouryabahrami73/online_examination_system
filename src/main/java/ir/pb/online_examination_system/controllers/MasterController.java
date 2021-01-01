@@ -113,9 +113,10 @@ public class MasterController {
         service.saveQuestion(question);
         Exam exam1 = service.findExamById(exam.getId());
         ExamQuestion examQuestion = service.makeExamQuestion(exam1.getCourse().getName()
-                , service.findExamById(exam.getId())
+                , exam1
                 , question, mark);
         service.saveExamQuestion(examQuestion);
+
         questions(model, exam1.getCourse().getName(), exam1);
 //        model.addAttribute("exam", exam);
 //        model.addAttribute("questions", service.findAllQuestionsOfCourse(exam.getCourse()));

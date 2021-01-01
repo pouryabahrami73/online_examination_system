@@ -24,4 +24,6 @@ public interface StudentService {
     List<Exam> findExamsOfCourse(Course course);
 
     List<Exam> findExams();
+
+    Exam findExamById(Long id);
 }

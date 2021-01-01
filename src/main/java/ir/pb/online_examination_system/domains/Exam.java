@@ -27,7 +27,7 @@ public class Exam extends BaseEntity<Long> {
     private String information;
     @Column
     private String title;
-    @OneToMany(mappedBy = "exam")
+    @OneToMany(mappedBy = "exam", fetch = FetchType.EAGER)
     private List<ExamQuestion> examQuestions;
     @Column
     private int grade;

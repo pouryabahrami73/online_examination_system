@@ -95,10 +95,7 @@
                     <td th:text="${exam.information}">
                     </td>
                     <td th:if="${exam.date.after(#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm'))}">
-                        <a type="submit" th:href="@{/master/edit-exam/{id}(id = ${exam.id})}" class="btn btn-dark col-sm-4 text-warning">ویرایش</a>
-                        <button type="submit" th:formaction="delete-operation"
-                                class="btn btn-dark col-sm-4 text-warning">شرکت در آزمون
-                        </button>
+                        <a type="submit" th:href="@{/student/take-exam/{id}(id = ${exam.id})}" class="btn btn-dark col-sm-4 text-warning">شرکت در آزمون</a>
                     </td>
                 </tr>
                 </tbody>
