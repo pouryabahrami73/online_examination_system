@@ -16,9 +16,9 @@ public class StudentExam extends BaseEntity<Long> {
     @ManyToOne
     @JoinColumn(name = "fk_student")
     private Student student;
-    /*@OneToOne
-    @JoinColumn(name = "fk_examSheet")
-    private ExamSheet examSheet;*/
+    @OneToOne
+    @JoinColumn(name = "fk_examsheet")
+    private ExamSheet examSheet;
     @Column
     private float grade;
 
@@ -39,13 +39,13 @@ public class StudentExam extends BaseEntity<Long> {
         this.exam = exam;
     }
 
-    /*public ExamSheet getExamSheet() {
+    public ExamSheet getExamSheet() {
         return examSheet;
     }
 
     public void setExamSheet(ExamSheet examSheet) {
         this.examSheet = examSheet;
-    }*/
+    }
 
     public Student getStudent() {
         return student;

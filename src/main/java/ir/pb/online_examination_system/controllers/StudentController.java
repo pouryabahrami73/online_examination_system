@@ -1,8 +1,6 @@
 package ir.pb.online_examination_system.controllers;
 
-import ir.pb.online_examination_system.domains.Course;
-import ir.pb.online_examination_system.domains.Exam;
-import ir.pb.online_examination_system.domains.Question;
+import ir.pb.online_examination_system.domains.*;
 import ir.pb.online_examination_system.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,9 +46,10 @@ public class StudentController {
         Exam exam = service.findExamById(id);
         List<Question> questions = new ArrayList<>();
         exam.getExamQuestions().stream().forEach(examQuestion -> questions.add(examQuestion.getQuestion()));
+        ExamSheet examSheet = service.makeNewExamSheet(exam, questions);
         model.addAttribute("examId", exam.getId());
         model.addAttribute("examTime", exam.getDurationInMin());
-        model.addAttribute("questions", questions);
+        model.addAttribute("questions", examSheet.getQuestions());
         return "exam";
     }
 }

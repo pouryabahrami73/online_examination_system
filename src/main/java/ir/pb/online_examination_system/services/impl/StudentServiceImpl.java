@@ -1,9 +1,6 @@
 package ir.pb.online_examination_system.services.impl;
 
-import ir.pb.online_examination_system.domains.Course;
-import ir.pb.online_examination_system.domains.Exam;
-import ir.pb.online_examination_system.domains.Student;
-import ir.pb.online_examination_system.domains.User;
+import ir.pb.online_examination_system.domains.*;
 import ir.pb.online_examination_system.repositories.StudentRepository;
 import ir.pb.online_examination_system.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +25,8 @@ public class StudentServiceImpl implements StudentService {
     private ExamService examService;
     @Autowired
     private StudentExamService studentExamService;
+    @Autowired
+    private ExamSheetService examSheetService;
 
     @Override
     public List<Student> students() {
@@ -83,5 +82,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Exam findExamById(Long id) {
         return examService.findById(id).get();
+    }
+
+    @Override
+    public ExamSheet makeNewExamSheet(Exam exam, List<Question> questions) {
+        ExamSheet examSheet = examSheetService.makeNewExamSheet(student, exam, questions);
+        return examSheet;
     }
 }
