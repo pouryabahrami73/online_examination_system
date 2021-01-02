@@ -56,7 +56,6 @@ function htmlMaker(x){
             `)
         }
     } else {
-        console.log(questions[x].type);
         $(quest).append(`
                     <div id="question-problem">${questions[x].problem}
                     <div id="answer-div">

@@ -48,7 +48,8 @@ public class StudentController {
         Exam exam = service.findExamById(id);
         List<Question> questions = new ArrayList<>();
         exam.getExamQuestions().stream().forEach(examQuestion -> questions.add(examQuestion.getQuestion()));
-        model.addAttribute("exam", exam);
+        model.addAttribute("examId", exam.getId());
+        model.addAttribute("examTime", exam.getDurationInMin());
         model.addAttribute("questions", questions);
         return "exam";
     }

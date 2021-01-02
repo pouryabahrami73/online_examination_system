@@ -42,6 +42,8 @@
         </nav>
         <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4" role="main">
             <div id="question"></div>
+            <br>
+            <div id="countdown"></div>
         </main>
     </div>
 </div>
@@ -61,9 +63,12 @@
         crossorigin="anonymous"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var questions = /*[[${questions}]]*/"Test";
-    /*]]>*/
+    var examId = /*[[${examId}]]*/"Test";
+    var examTime = /*[[${examTime}]]*/"Test1";
+    var questions = /*[[${questions}]]*/"Test2";
+    // /*]]>*/
 </script>
 <script src="/js/MainExamJs.js"></script>
+<script src="/js/TimerJs.js"></script>
 </body>
 </html>

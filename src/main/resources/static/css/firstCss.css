@@ -16,3 +16,8 @@
 #next-question-btn{
     float: left;
 }
+#countdown{
+    top: 400px;
+    font-size: xx-large;
+    position: fixed;
+}
