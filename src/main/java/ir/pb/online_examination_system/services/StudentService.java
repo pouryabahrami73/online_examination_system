@@ -3,6 +3,7 @@ package ir.pb.online_examination_system.services;
 import ir.pb.online_examination_system.domains.*;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 public interface StudentService {
@@ -25,4 +26,10 @@ public interface StudentService {
     Exam findExamById(Long id);
 
     ExamSheet makeNewExamSheet(Exam exam, List<Question> questions);
+
+    void makeNewStudentExam(Exam exam, ExamSheet examSheet);
+
+    ExamSheet findExamSheetById(long examSheetId);
+
+    ExamSheet setStartAndFinishToExamSheet(ExamSheet examSheet, Date startingTime, int DurationInMin);
 }

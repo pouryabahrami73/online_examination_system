@@ -19,11 +19,11 @@ public class ExamSheet extends BaseEntity<Long> {
             joinColumns = {@JoinColumn(name = "fk_examSheet")},
             inverseJoinColumns ={@JoinColumn(name = "fk_question")})
     private List<Question> questions;
-    @Column(updatable = false)
+    @Column
     @Temporal(TemporalType.TIME)
     @DateTimeFormat(pattern = "HH:mm")
     private Date examStartingTime;
-    @Column(updatable = false)
+    @Column
     @Temporal(TemporalType.TIME)
     @DateTimeFormat(pattern = "HH:mm")
     private Date examFinishTime;
@@ -58,6 +58,14 @@ public class ExamSheet extends BaseEntity<Long> {
 
     public void setQuestionsInTimeOfExam(List<String> questionsInTimeOfExam) {
         this.questionsInTimeOfExam = questionsInTimeOfExam;
+    }
+
+    public Date getExamFinishTime() {
+        return examFinishTime;
+    }
+
+    public void setExamFinishTime(Date examFinishTime) {
+        this.examFinishTime = examFinishTime;
     }
 
     public List<String> getStudentAnswer() {

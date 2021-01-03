@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
@@ -31,7 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+                .csrf().disable()
+//                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//                .and()
+                .authorizeRequests()
                 .antMatchers("../static/css/**").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .mvcMatchers("/sign-up-form").permitAll()

@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    starter();
     let quest = document.getElementById("question");
     if (questions[0].type === 'MULTIPLE_CHOICE') {
         $(quest).append(`
@@ -80,7 +81,7 @@ function htmlMaker(x){
     if (x === questions.length - 1) {
         $(quest).append(`
                     <button type="button" id="exam-finisher-btn" name="button" class="btn btn-dark col-sm-2 text-warning"
-                    onclick="">
+                    onclick="finisherButton(z)">
                     پایان
                     </button>`);
     }
@@ -92,6 +93,54 @@ function previousQuestion(y) {
 }
 
 function nextQuestion(y) {
+    sendJSON(y);
     y += 1;
     htmlMaker(y);
+}
+
+function finisherButton(y){
+    sendJSON(y);
+}
+
+function sendJSON(n){
+    const toSend = {
+        questionId: questions[n].id,
+        answer: $('input[name ="answer"]').val(),
+        examSheetId: examSheetId
+    };
+    var data = JSON.stringify(toSend);
+    let xhr = new XMLHttpRequest();
+    let url = "http://localhost:8080/student/answer-questions";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    /*xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            result.innerHTML = this.responseText;
+
+        }
+    };*/
+    xhr.send(data);
+}
+
+function starter(){
+    const date = new Date();
+    const now = date.getHours() + ":" + date.getMinutes();
+    const toSend = {
+        examStartingTime: now,
+        examSheetId: examSheetId,
+        examId: examId
+
+    };
+    var examStarterDate = JSON.stringify(toSend);
+    let xhr = new XMLHttpRequest();
+    let url = "http://localhost:8080/student/exam-start-time-setter";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    /*xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            result.innerHTML = this.responseText;
+
+        }
+    };*/
+    xhr.send(examStarterDate);
 }

@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -89,4 +90,20 @@ public class StudentServiceImpl implements StudentService {
         ExamSheet examSheet = examSheetService.makeNewExamSheet(student, exam, questions);
         return examSheet;
     }
+
+    @Override
+    public void makeNewStudentExam(Exam exam, ExamSheet examSheet) {
+        studentExamService.makeNewStudentExam(exam, student, examSheet);
+    }
+
+    @Override
+    public ExamSheet findExamSheetById(long examSheetId) {
+        return examSheetService.findById(examSheetId);
+    }
+
+    @Override
+    public ExamSheet setStartAndFinishToExamSheet(ExamSheet examSheet, Date startingTime, int durationInMin) {
+        return examSheetService.setStartAndFinishToExamSheet(examSheet, startingTime, durationInMin);
+    }
+
 }

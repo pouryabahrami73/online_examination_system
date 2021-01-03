@@ -3,16 +3,14 @@ package ir.pb.online_examination_system.controllers;
 import ir.pb.online_examination_system.domains.*;
 import ir.pb.online_examination_system.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -35,8 +33,8 @@ public class StudentController {
         List<Exam> doneExams = service.findExams();
 //        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
-        exams.stream().filter(exam -> !doneExams.contains(exam) & exam.getDate().after(date))
-                .collect(Collectors.toList());
+        /*exams = exams.stream().filter(exam -> !doneExams.contains(exam) & exam.getDate().after(date))
+                .collect(Collectors.toList());*/
         model.addAttribute("exams", exams);
         return "student-exams-of-course";
     }
@@ -47,9 +45,32 @@ public class StudentController {
         List<Question> questions = new ArrayList<>();
         exam.getExamQuestions().stream().forEach(examQuestion -> questions.add(examQuestion.getQuestion()));
         ExamSheet examSheet = service.makeNewExamSheet(exam, questions);
+        service.makeNewStudentExam(exam, examSheet);
         model.addAttribute("examId", exam.getId());
         model.addAttribute("examTime", exam.getDurationInMin());
         model.addAttribute("questions", examSheet.getQuestions());
+        model.addAttribute("examSheetId", examSheet.getId());
         return "exam";
+    }
+
+    @PostMapping("/exam-start-time-setter")
+    public ResponseEntity<Object> examSheetSetter(@RequestBody ExamSheetStarterDTO dto) throws ParseException {
+        long examSheetId = dto.getExamSheetId();
+        String examStartingTime = dto.getExamStartingTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        ExamSheet examSheet = service.findExamSheetById(examSheetId);
+        Date startingTime = formatter.parse(examStartingTime);
+        long examId = dto.getExamId();
+        Exam exam = service.findExamById(examId);
+        service.setStartAndFinishToExamSheet(examSheet, startingTime, exam.getDurationInMin());
+        return null;
+    }
+
+    @PostMapping("/answer-questions")
+    public ResponseEntity<Object> examSheetAnswerSetter(@RequestBody QuestionAnswerDTO dto) {
+        long questionId = dto.getQuestionId();
+        String answer = dto.getAnswer();
+        long examSheetId = dto.getExamSheetId();
+        return null;
     }
 }
