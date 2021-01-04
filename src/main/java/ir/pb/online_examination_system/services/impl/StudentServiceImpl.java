@@ -118,4 +118,9 @@ public class StudentServiceImpl implements StudentService {
         return examSheetService.getRemainedTimeToFinish(examSheet);
     }
 
+    @Override
+    public ExamSheet findUncompletedExamSheet() {
+        return examSheetService.findUncompletedExamSheetByStudent(student);
+    }
+
 }

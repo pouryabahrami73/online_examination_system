@@ -67,6 +67,15 @@ public class ExamSheetServiceImpl implements ExamSheetService {
         cal.setTime(examSheet.getExamFinishTime());
         long examSheetFinishMillis = cal.getTimeInMillis();
         int remainedTime = (int) ((examSheetFinishMillis - nowMillis) / ONE_MINUTE_IN_MILLIS);
-        return remainedTime;
+        if(remainedTime >= 1) {
+            return remainedTime;
+        }
+        return 0;
+    }
+
+    @Override
+    public ExamSheet findUncompletedExamSheetByStudent(Student student) {
+        ExamSheet examSheet = repository.findByStudentAndComplete(student, false);
+        return examSheet;
     }
 }

@@ -36,4 +36,6 @@ public interface StudentService {
     void setQuestionAnswer(ExamSheet examSheet, Question question, String answer);
 
     Integer continueExamSheetTime(ExamSheet examSheet);
+
+    ExamSheet findUncompletedExamSheet();
 }

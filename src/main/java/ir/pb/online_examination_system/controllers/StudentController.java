@@ -8,10 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/student")
@@ -35,6 +32,14 @@ public class StudentController {
         Date date = new Date();
         /*exams = exams.stream().filter(exam -> !doneExams.contains(exam) & exam.getDate().after(date))
                 .collect(Collectors.toList());*/
+//        doneExams.stream().filter(exam -> exam)
+        ExamSheet uncompletedExamSheet = service.findUncompletedExamSheet();
+        if(uncompletedExamSheet != null) {
+            model.addAttribute("uncompletedExamId", uncompletedExamSheet.getId());
+            model.addAttribute("examStartingTime", uncompletedExamSheet.getExamStartingTime());
+            model.addAttribute("examFinishTime", uncompletedExamSheet.getExamFinishTime());
+            model.addAttribute("examTime", service.continueExamSheetTime(uncompletedExamSheet));
+        }
         model.addAttribute("exams", exams);
         return "student-exams-of-course";
     }
