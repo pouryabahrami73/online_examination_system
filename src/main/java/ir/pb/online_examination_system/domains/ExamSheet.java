@@ -10,6 +10,8 @@ import java.util.Map;
 
 @Entity
 public class ExamSheet extends BaseEntity<Long> {
+    @Column
+    boolean complete;
     @ElementCollection
     private List<String> questionsInTimeOfExam;
     @ElementCollection
@@ -34,6 +36,14 @@ public class ExamSheet extends BaseEntity<Long> {
     @JoinColumn
     private Exam exam;
     public ExamSheet() {
+    }
+
+    public boolean isComplete() {
+        return complete;
+    }
+
+    public void setComplete(boolean complete) {
+        this.complete = complete;
     }
 
     public Student getStudent() {

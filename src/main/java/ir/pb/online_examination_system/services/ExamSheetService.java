@@ -14,4 +14,6 @@ public interface ExamSheetService {
     ExamSheet findById(long examSheetId);
 
     void setQuestionAnswer(ExamSheet examSheet, Question question, String answer);
+
+    Integer getRemainedTimeToFinish(ExamSheet examSheet);
 }

@@ -113,4 +113,9 @@ public class StudentServiceImpl implements StudentService {
         examSheetService.setQuestionAnswer(examSheet, question, answer);
     }
 
+    @Override
+    public Integer continueExamSheetTime(ExamSheet examSheet) {
+        return examSheetService.getRemainedTimeToFinish(examSheet);
+    }
+
 }

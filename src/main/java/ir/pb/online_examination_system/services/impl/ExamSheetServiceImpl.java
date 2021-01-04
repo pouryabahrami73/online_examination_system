@@ -32,6 +32,7 @@ public class ExamSheetServiceImpl implements ExamSheetService {
         long t = cal.getTimeInMillis();
         Date finishTime = new Date(t + (exam.getDurationInMin() * ONE_MINUTE_IN_MILLIS));
         examSheet.setExamFinishTime(finishTime);
+        examSheet.setComplete(false);
         repository.save(examSheet);
         return examSheet;
     }
@@ -54,5 +55,18 @@ public class ExamSheetServiceImpl implements ExamSheetService {
             examSheet.setStudentAnswer(studentAnswer);
         }
         repository.save(examSheet);
+    }
+
+    @Override
+    public Integer getRemainedTimeToFinish(ExamSheet examSheet) {
+        Date date = new Date();
+        final int ONE_MINUTE_IN_MILLIS = 60000;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        long nowMillis = cal.getTimeInMillis();
+        cal.setTime(examSheet.getExamFinishTime());
+        long examSheetFinishMillis = cal.getTimeInMillis();
+        int remainedTime = (int) ((examSheetFinishMillis - nowMillis) / ONE_MINUTE_IN_MILLIS);
+        return remainedTime;
     }
 }

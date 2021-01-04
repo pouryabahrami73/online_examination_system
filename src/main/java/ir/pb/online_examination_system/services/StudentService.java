@@ -34,4 +34,6 @@ public interface StudentService {
     Question findQuestionById(long questionId);
 
     void setQuestionAnswer(ExamSheet examSheet, Question question, String answer);
+
+    Integer continueExamSheetTime(ExamSheet examSheet);
 }

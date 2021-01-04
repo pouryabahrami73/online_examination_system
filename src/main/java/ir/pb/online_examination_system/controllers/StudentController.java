@@ -53,6 +53,16 @@ public class StudentController {
         return "exam";
     }
 
+    @GetMapping("/continue-exam/{id}")
+    public String continueExam(@PathVariable Long id, Model model){
+        ExamSheet examSheet = service.findExamSheetById(id);
+        model.addAttribute("examId", examSheet.getExam().getId());
+        model.addAttribute("examTime", service.continueExamSheetTime(examSheet));
+        model.addAttribute("questions", examSheet.getQuestions());
+        model.addAttribute("examSheetId", examSheet.getId());
+        return "exam";
+    }
+
     @PostMapping("/answer-questions")
     public ResponseEntity<Object> examSheetAnswerSetter(@RequestBody QuestionAnswerDTO dto) {
         long questionId = dto.getQuestionId();
