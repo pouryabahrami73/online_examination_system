@@ -19,11 +19,11 @@ public class ExamSheet extends BaseEntity<Long> {
             joinColumns = {@JoinColumn(name = "fk_examSheet")},
             inverseJoinColumns ={@JoinColumn(name = "fk_question")})
     private List<Question> questions;
-    @Column
+    @Column(updatable = false)
     @Temporal(TemporalType.TIME)
     @DateTimeFormat(pattern = "HH:mm")
     private Date examStartingTime;
-    @Column
+    @Column(updatable = false)
     @Temporal(TemporalType.TIME)
     @DateTimeFormat(pattern = "HH:mm")
     private Date examFinishTime;

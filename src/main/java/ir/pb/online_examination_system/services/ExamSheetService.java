@@ -13,5 +13,5 @@ public interface ExamSheetService {
 
     ExamSheet findById(long examSheetId);
 
-    ExamSheet setStartAndFinishToExamSheet(ExamSheet examSheet, Date startingTime, int durationInMin);
+    void setQuestionAnswer(ExamSheet examSheet, Question question, String answer);
 }

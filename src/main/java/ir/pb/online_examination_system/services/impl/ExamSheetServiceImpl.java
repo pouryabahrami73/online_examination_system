@@ -9,9 +9,7 @@ import ir.pb.online_examination_system.services.ExamSheetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ExamSheetServiceImpl implements ExamSheetService {
@@ -22,7 +20,18 @@ public class ExamSheetServiceImpl implements ExamSheetService {
         ExamSheet examSheet = new ExamSheet();
         examSheet.setStudent(student);
         examSheet.setQuestions(questions);
+        List<String> questionsInExamTime = new ArrayList<>();
+        questions.stream().forEach(question -> questionsInExamTime.add(question.getProblem()));
+        examSheet.setQuestionsInTimeOfExam(questionsInExamTime);
         examSheet.setExam(exam);
+        Date date = new Date();
+        examSheet.setExamStartingTime(date);
+        final int ONE_MINUTE_IN_MILLIS = 60000;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        long t = cal.getTimeInMillis();
+        Date finishTime = new Date(t + (exam.getDurationInMin() * ONE_MINUTE_IN_MILLIS));
+        examSheet.setExamFinishTime(finishTime);
         repository.save(examSheet);
         return examSheet;
     }
@@ -33,14 +42,17 @@ public class ExamSheetServiceImpl implements ExamSheetService {
     }
 
     @Override
-    public ExamSheet setStartAndFinishToExamSheet(ExamSheet examSheet, Date startingTime, int durationInMin) {
-        examSheet.setExamStartingTime(startingTime);
-        final int ONE_MINUTE_IN_MILLIS = 60000;
-        Calendar date = Calendar.getInstance();
-        date.setTime(startingTime);
-        long t = date.getTimeInMillis();
-        Date finishTime = new Date(t + (durationInMin * ONE_MINUTE_IN_MILLIS));
-        examSheet.setExamFinishTime(finishTime);
-        return repository.save(examSheet);
+    public void setQuestionAnswer(ExamSheet examSheet, Question question, String answer) {
+        if (examSheet.getStudentAnswer().size() == examSheet.getQuestionsInTimeOfExam().size()) {
+            int questionIndex = examSheet.getQuestions().indexOf(question);
+            List<String> studentAnswers = examSheet.getStudentAnswer();
+            studentAnswers.set(questionIndex, answer);
+            examSheet.setStudentAnswer(studentAnswers);
+        }else {
+            List<String> studentAnswer = examSheet.getStudentAnswer();
+            studentAnswer.add(answer);
+            examSheet.setStudentAnswer(studentAnswer);
+        }
+        repository.save(examSheet);
     }
 }

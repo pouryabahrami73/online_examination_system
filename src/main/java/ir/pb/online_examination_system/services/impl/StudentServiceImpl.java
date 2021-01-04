@@ -28,6 +28,8 @@ public class StudentServiceImpl implements StudentService {
     private StudentExamService studentExamService;
     @Autowired
     private ExamSheetService examSheetService;
+    @Autowired
+    private QuestionService questionService;
 
     @Override
     public List<Student> students() {
@@ -102,8 +104,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public ExamSheet setStartAndFinishToExamSheet(ExamSheet examSheet, Date startingTime, int durationInMin) {
-        return examSheetService.setStartAndFinishToExamSheet(examSheet, startingTime, durationInMin);
+    public Question findQuestionById(long questionId) {
+        return questionService.findQuestionById(questionId);
+    }
+
+    @Override
+    public void setQuestionAnswer(ExamSheet examSheet, Question question, String answer) {
+        examSheetService.setQuestionAnswer(examSheet, question, answer);
     }
 
 }

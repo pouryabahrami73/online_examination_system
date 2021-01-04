@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    starter();
+    // starter();
     let quest = document.getElementById("question");
     if (questions[0].type === 'MULTIPLE_CHOICE') {
         $(quest).append(`
@@ -122,6 +122,7 @@ function sendJSON(n){
     xhr.send(data);
 }
 
+/*
 function starter(){
     const date = new Date();
     const now = date.getHours() + ":" + date.getMinutes();
@@ -136,11 +137,11 @@ function starter(){
     let url = "http://localhost:8080/student/exam-start-time-setter";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    /*xhr.onreadystatechange = function () {
+    /!*xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             result.innerHTML = this.responseText;
 
         }
-    };*/
+    };*!/
     xhr.send(examStarterDate);
-}
+}*/

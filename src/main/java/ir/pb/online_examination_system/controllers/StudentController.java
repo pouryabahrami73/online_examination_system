@@ -53,24 +53,14 @@ public class StudentController {
         return "exam";
     }
 
-    @PostMapping("/exam-start-time-setter")
-    public ResponseEntity<Object> examSheetSetter(@RequestBody ExamSheetStarterDTO dto) throws ParseException {
-        long examSheetId = dto.getExamSheetId();
-        String examStartingTime = dto.getExamStartingTime();
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-        ExamSheet examSheet = service.findExamSheetById(examSheetId);
-        Date startingTime = formatter.parse(examStartingTime);
-        long examId = dto.getExamId();
-        Exam exam = service.findExamById(examId);
-        service.setStartAndFinishToExamSheet(examSheet, startingTime, exam.getDurationInMin());
-        return null;
-    }
-
     @PostMapping("/answer-questions")
     public ResponseEntity<Object> examSheetAnswerSetter(@RequestBody QuestionAnswerDTO dto) {
         long questionId = dto.getQuestionId();
         String answer = dto.getAnswer();
         long examSheetId = dto.getExamSheetId();
+        Question question = service.findQuestionById(questionId);
+        ExamSheet examSheet = service.findExamSheetById(examSheetId);
+        service.setQuestionAnswer(examSheet, question, answer);
         return null;
     }
 }

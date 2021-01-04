@@ -19,4 +19,9 @@ public class QuestionServiceImpl implements QuestionService {
     public Question findById(Long questionId) {
         return repository.findById(questionId).get();
     }
+
+    @Override
+    public Question findQuestionById(long questionId) {
+        return repository.findById(questionId).get();
+    }
 }
