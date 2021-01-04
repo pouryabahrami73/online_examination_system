@@ -22,12 +22,12 @@ public class ExamSheet extends BaseEntity<Long> {
             inverseJoinColumns ={@JoinColumn(name = "fk_question")})
     private List<Question> questions;
     @Column(updatable = false)
-    @Temporal(TemporalType.TIME)
-    @DateTimeFormat(pattern = "HH:mm")
+    /*@Temporal(TemporalType.TIME)
+    @DateTimeFormat(pattern = "HH:mm")*/
     private Date examStartingTime;
     @Column(updatable = false)
-    @Temporal(TemporalType.TIME)
-    @DateTimeFormat(pattern = "HH:mm")
+    /*@Temporal(TemporalType.TIME)
+    @DateTimeFormat(pattern = "HH:mm")*/
     private Date examFinishTime;
     @ManyToOne
     @JoinColumn(name = "fk_student")

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/student")
@@ -28,17 +29,20 @@ public class StudentController {
         model.addAttribute("course", course);
         List<Exam> exams = service.findExamsOfCourse(course);
         List<Exam> doneExams = service.findExams();
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
-        /*exams = exams.stream().filter(exam -> !doneExams.contains(exam) & exam.getDate().after(date))
-                .collect(Collectors.toList());*/
-//        doneExams.stream().filter(exam -> exam)
+        exams = exams.stream().filter(exam -> !doneExams.contains(exam) & exam.getDate().after(date))
+                .collect(Collectors.toList());
         ExamSheet uncompletedExamSheet = service.findUncompletedExamSheet();
         if(uncompletedExamSheet != null) {
-            model.addAttribute("uncompletedExamId", uncompletedExamSheet.getId());
+            model.addAttribute("uncompletedExamSheetId", uncompletedExamSheet.getId());
             model.addAttribute("examStartingTime", uncompletedExamSheet.getExamStartingTime());
             model.addAttribute("examFinishTime", uncompletedExamSheet.getExamFinishTime());
             model.addAttribute("examTime", service.continueExamSheetTime(uncompletedExamSheet));
+        }else{
+            model.addAttribute("uncompletedExamId", null);
+            model.addAttribute("examStartingTime", null);
+            model.addAttribute("examFinishTime", null);
+            model.addAttribute("examTime", null);
         }
         model.addAttribute("exams", exams);
         return "student-exams-of-course";

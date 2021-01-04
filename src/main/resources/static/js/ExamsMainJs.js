@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  if (uncompletedExamSheetId != null & examTime > 1){
+  if (uncompletedExamSheetId != null && examTime > 1){
       let ableExamsTable = document.getElementById("ableExams");
       ableExamsTable.remove();
       let uncompletedExamDiv = document.getElementById("uncompletedExam");
@@ -8,7 +8,7 @@ $(document).ready(function () {
                 <tr>
                     <th scope="col">شناسه</th>
                     <th scope="col">تاریخ آزمون</th>
-                    <th scope="col">زمان آزمون</th>
+                    <th scope="col">زمان آزمون باقی مانده</th>
                     <th scope="col">عملیات</th>
                 </tr>
                 </thead>
@@ -21,27 +21,28 @@ $(document).ready(function () {
                         ${examStartingTime}
                     </td>
                     <td>
-                        ${examFinishTime}
+                        ${examTime}
                     </td>
                     <td>
-                        <button type="submit"
+                        <a type="submit"
                            class="btn btn-dark col-sm-4 text-warning"
-                           onclick="continueExam(examSheetId)">ادامه آزمون</button>
+                           href="/student/continue-exam/${uncompletedExamSheetId}">ادامه آزمون</a>
                     </td>
                 </tr>
                 </tbody>
             </table>`);
   }
 })
-function continueExam(id){
+/*
+function continueExam(){
         let xhr = new XMLHttpRequest();
-        let url = "http://localhost:8080/student/continue-exam/".concat(id);
+        let url = "http://localhost:8080/student/continue-exam/".concat(uncompletedExamSheetId);
         xhr.open("GET", url, true);
-        /*xhr.onreadystatechange = function () {
+        /!*xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 result.innerHTML = this.responseText;
 
             }
-        };*/
+        };*!/
         xhr.send();
-}
+}*/
