@@ -72,6 +72,13 @@ public class StudentController {
         return "exam";
     }
 
+    @GetMapping("/finish-exam/{id}")
+    public String finishExam(@PathVariable Long id, Model model){
+        service.completeExamSheet(id);
+        model.addAttribute("massage", "امتحان پایان یافت!");
+        return "finish-exam";
+    }
+
     @PostMapping("/answer-questions")
     public ResponseEntity<Object> examSheetAnswerSetter(@RequestBody QuestionAnswerDTO dto) {
         long questionId = dto.getQuestionId();

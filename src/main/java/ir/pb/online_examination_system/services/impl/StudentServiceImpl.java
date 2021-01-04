@@ -123,4 +123,9 @@ public class StudentServiceImpl implements StudentService {
         return examSheetService.findUncompletedExamSheetByStudent(student);
     }
 
+    @Override
+    public void completeExamSheet(Long id) {
+        examSheetService.completeExamSheet(id);
+    }
+
 }

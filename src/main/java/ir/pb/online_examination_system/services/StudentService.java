@@ -38,4 +38,6 @@ public interface StudentService {
     Integer continueExamSheetTime(ExamSheet examSheet);
 
     ExamSheet findUncompletedExamSheet();
+
+    void completeExamSheet(Long id);
 }

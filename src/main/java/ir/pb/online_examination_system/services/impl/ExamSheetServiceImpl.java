@@ -67,8 +67,11 @@ public class ExamSheetServiceImpl implements ExamSheetService {
         cal.setTime(examSheet.getExamFinishTime());
         long examSheetFinishMillis = cal.getTimeInMillis();
         int remainedTime = (int) ((examSheetFinishMillis - nowMillis) / ONE_MINUTE_IN_MILLIS);
-        if(remainedTime >= 1) {
+        if(remainedTime > 1) {
             return remainedTime;
+        }else {
+            examSheet.setComplete(true);
+            repository.save(examSheet);
         }
         return 0;
     }
@@ -77,5 +80,12 @@ public class ExamSheetServiceImpl implements ExamSheetService {
     public ExamSheet findUncompletedExamSheetByStudent(Student student) {
         ExamSheet examSheet = repository.findByStudentAndComplete(student, false);
         return examSheet;
+    }
+
+    @Override
+    public void completeExamSheet(Long id) {
+        ExamSheet examSheet = repository.findById(id).get();
+        examSheet.setComplete(true);
+        repository.save(examSheet);
     }
 }

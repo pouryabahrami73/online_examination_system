@@ -18,4 +18,6 @@ public interface ExamSheetService {
     Integer getRemainedTimeToFinish(ExamSheet examSheet);
 
     ExamSheet findUncompletedExamSheetByStudent(Student student);
+
+    void completeExamSheet(Long id);
 }

@@ -31,18 +31,13 @@ $(document).ready(function () {
                 </tr>
                 </tbody>
             </table>`);
+  }else if (examTime <= 1){
+      completeExam();
   }
 })
-/*
-function continueExam(){
+function completeExam(){
         let xhr = new XMLHttpRequest();
         let url = "http://localhost:8080/student/continue-exam/".concat(uncompletedExamSheetId);
         xhr.open("GET", url, true);
-        /!*xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                result.innerHTML = this.responseText;
-
-            }
-        };*!/
         xhr.send();
-}*/
+}

@@ -13,6 +13,9 @@
     background-color: #616161;
 }
 
+#exam-finisher-btn{
+    float: left;
+}
 #next-question-btn{
     float: left;
 }
