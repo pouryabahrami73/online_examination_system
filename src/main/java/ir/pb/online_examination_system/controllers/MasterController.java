@@ -53,7 +53,7 @@ public class MasterController {
 
     @GetMapping("/new-exam/{id}")
     public String createNewExam(@PathVariable Long id, Model model) {
-        model.addAttribute("course", service.findCourseById(id);
+        model.addAttribute("course", service.findCourseById(id));
         return "new-exam";
     }
 
