@@ -34,9 +34,9 @@ public class MasterController {
         return "exams-of-course";
     }
 
-    @PostMapping("/delete-operation")
-    public String deleteExam(@ModelAttribute Optional<Exam> optionalExam, Model model) {
-        Exam exam = service.findExamById(optionalExam.get().getId());
+    @GetMapping("/delete-operation/{id}")
+    public String deleteExam(@PathVariable Long id, Model model) {
+        Exam exam = service.findExamById(id);
         service.deleteExam(exam);
         List<Exam> exams = service.findExamsOfCourse(exam.getCourse());
         model.addAttribute("course", exam.getCourse());
@@ -51,9 +51,9 @@ public class MasterController {
         return "edit-exam";
     }
 
-    @PostMapping("/new-exam")
-    public String createNewExam(@ModelAttribute Optional<Course> courseOptional, Model model) {
-        model.addAttribute("course", service.findCourseById(courseOptional.get().getId()));
+    @GetMapping("/new-exam/{id}")
+    public String createNewExam(@PathVariable Long id, Model model) {
+        model.addAttribute("course", service.findCourseById(id);
         return "new-exam";
     }
 

@@ -100,9 +100,7 @@ function nextQuestion(y) {
 
 function finisherButton(y){
     sendJSON(y);
-    completeExam();
     window.location.href = "/student/finish-exam/".concat(examSheetId);
-    console.log("finish button in mainexamjs")
 }
 
 function sendJSON(n){
@@ -117,12 +115,4 @@ function sendJSON(n){
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(data);
-}
-
-function completeExam(){
-    console.log('complete exam in mainexamjs')
-    let xhr = new XMLHttpRequest();
-    let url = "http://localhost:8080/student/finish-exam/".concat(examSheetId);
-    xhr.open("GET", url, true);
-    xhr.send();
 }

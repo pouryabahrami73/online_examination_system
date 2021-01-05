@@ -96,17 +96,17 @@
                         </td>
                         <td th:if="${exam.date.after(#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm'))}">
                             <a type="submit" th:href="@{/master/edit-exam/{id}(id = ${exam.id})}" class="btn btn-dark col-sm-4 text-warning">ویرایش</a>
-                            <button type="submit" th:formaction="delete-operation"
+                            <a type="submit" th:href="@{/master/delete-operation/{id}(id = ${exam.id})}"
                                     class="btn btn-dark col-sm-4 text-warning">حذف
-                            </button>
+                            </a>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <form class="card-body" action="#" th:action="@{new-exam}" method="post">
-                <input type="hidden" name="id" th:field="${course.id}">
-                <button type="submit" class="btn btn-dark col-sm-4 text-warning">افزودن آزمون جدید</button>
-            </form>
+            <div class="card-body">
+                <a type="submit" class="btn btn-dark col-sm-4 text-warning"
+                   th:href="@{/master/new-exam/{id}(id = ${course.id})}">افزودن آزمون جدید</a>
+            </div>
         </main>
     </div>
 </div>
