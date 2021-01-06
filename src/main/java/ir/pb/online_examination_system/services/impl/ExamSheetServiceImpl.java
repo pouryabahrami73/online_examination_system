@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ExamSheetServiceImpl implements ExamSheetService {
@@ -87,5 +88,17 @@ public class ExamSheetServiceImpl implements ExamSheetService {
         ExamSheet examSheet = repository.findById(id).get();
         examSheet.setComplete(true);
         repository.save(examSheet);
+    }
+
+    @Override
+    public List<ExamSheet> findAllCompleteExamSheets(Exam exam) {
+        return repository.findAllByExamAndComplete(exam, true)
+                .stream().collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ExamSheet> findAllUncompletedExamSheets(Exam exam) {
+        return repository.findAllByExamAndComplete(exam, false)
+                .stream().collect(Collectors.toList());
     }
 }

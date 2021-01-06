@@ -20,4 +20,8 @@ public interface ExamSheetService {
     ExamSheet findUncompletedExamSheetByStudent(Student student);
 
     void completeExamSheet(Long id);
+
+    List<ExamSheet> findAllCompleteExamSheets(Exam exam);
+
+    List<ExamSheet> findAllUncompletedExamSheets(Exam exam);
 }

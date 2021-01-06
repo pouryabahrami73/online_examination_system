@@ -29,6 +29,8 @@ public class MasterServiceImpl implements MasterService {
     private ExamQuestionService examQuestionService;
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private ExamSheetService examSheetService;
     @Override
     public List<Master> masters() {
         return repository.findAll();
@@ -147,5 +149,17 @@ public class MasterServiceImpl implements MasterService {
     @Override
     public void deleteExamQuestion(ExamQuestion examQuestion) {
         examQuestionService.delete(examQuestion);
+    }
+
+    @Override
+    public List<ExamSheet> findAllCompletedExamSheets(Exam exam) {
+        List<ExamSheet> completedExamSheets = examSheetService.findAllCompleteExamSheets(exam);
+        return completedExamSheets;
+    }
+
+    @Override
+    public List<ExamSheet> findAllUncompletedExamSheets(Exam exam) {
+        List<ExamSheet> uncompletedExamSheets = examSheetService.findAllUncompletedExamSheets(exam);
+        return uncompletedExamSheets;
     }
 }

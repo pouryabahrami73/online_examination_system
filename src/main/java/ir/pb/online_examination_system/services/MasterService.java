@@ -43,4 +43,8 @@ public interface MasterService {
     ExamQuestion findExamQuestionByQuestionAndExam(Question question, Exam exam);
 
     void deleteExamQuestion(ExamQuestion examQuestion);
+
+    List<ExamSheet> findAllCompletedExamSheets(Exam exam);
+
+    List<ExamSheet> findAllUncompletedExamSheets(Exam exam);
 }

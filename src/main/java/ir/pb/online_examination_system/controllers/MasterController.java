@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -132,5 +131,27 @@ public class MasterController {
         service.deleteExamQuestion(examQuestion);
         questions(model, exam.getCourse().getName(), exam);
         return "add-questions";
+    }
+
+    @GetMapping("/students-took-exam/{examId}")
+    public String showStudentsWhoCompletedExam(@PathVariable Long examId, Model model){
+        Exam exam = service.findExamById(examId);
+        List<ExamSheet> completedExamSheets = service.findAllCompletedExamSheets(exam);
+        List<ExamSheet> uncompletedExamSheets = service.findAllUncompletedExamSheets(exam);
+        /*model.addAttribute("complete", completedExamSheets);
+        model.addAttribute("incomplete", uncompletedExamSheets);*/
+        List<ExamSheet> allSheets = completedExamSheets;
+        uncompletedExamSheets.stream()
+                .forEach(examSheet -> allSheets.add(examSheet));
+        model.addAttribute("examSheets", allSheets);
+        model.addAttribute("students", completedExamSheets.size() + uncompletedExamSheets.size());
+        model.addAttribute("exam", exam);
+        return "exam-takers";
+    }
+
+    @GetMapping("/see-examSheet/{id}")
+    public String seeStudentExamSheet(@PathVariable Long id, Model model){
+
+        return "student-exam-sheet";
     }
 }
