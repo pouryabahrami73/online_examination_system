@@ -35,6 +35,10 @@ public class ExamSheet extends BaseEntity<Long> {
     @ManyToOne
     @JoinColumn
     private Exam exam;
+    @ElementCollection
+    private List<Float> eachQuestionMark;
+    @ElementCollection
+    private List<Float> studentMarkFromEachQuestion;
     public ExamSheet() {
     }
 
@@ -100,5 +104,21 @@ public class ExamSheet extends BaseEntity<Long> {
 
     public void setExamStartingTime(Date examStartingTime) {
         this.examStartingTime = examStartingTime;
+    }
+
+    public List<Float> getEachQuestionMark() {
+        return eachQuestionMark;
+    }
+
+    public void setEachQuestionMark(List<Float> eachQuestionMark) {
+        this.eachQuestionMark = eachQuestionMark;
+    }
+
+    public List<Float> getStudentMarkFromEachQuestion() {
+        return studentMarkFromEachQuestion;
+    }
+
+    public void setStudentMarkFromEachQuestion(List<Float> studentMarkFromEachQuestion) {
+        this.studentMarkFromEachQuestion = studentMarkFromEachQuestion;
     }
 }

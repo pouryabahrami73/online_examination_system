@@ -24,4 +24,8 @@ public interface ExamSheetService {
     List<ExamSheet> findAllCompleteExamSheets(Exam exam);
 
     List<ExamSheet> findAllUncompletedExamSheets(Exam exam);
+
+    Float findQuestionMarkInExam(Exam exam, Question question);
+
+    void save(ExamSheet examSheet);
 }

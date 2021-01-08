@@ -3,6 +3,7 @@ package ir.pb.online_examination_system.services;
 import ir.pb.online_examination_system.domains.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MasterService {
     List<Master> masters();
@@ -47,4 +48,10 @@ public interface MasterService {
     List<ExamSheet> findAllCompletedExamSheets(Exam exam);
 
     List<ExamSheet> findAllUncompletedExamSheets(Exam exam);
+
+    ExamSheet findExamSheetById(Long id);
+
+    void correctMultipleChoiceQuestions(ExamSheet examSheet);
+
+    void correctDescriptiveAndSubmitTotalGrade(Long id, Map<Integer, Float> marksMap);
 }

@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+
+import static ir.pb.online_examination_system.domains.QuestionType.MULTIPLE_CHOICES;
 
 @Service
 public class MasterServiceImpl implements MasterService {
@@ -31,6 +35,7 @@ public class MasterServiceImpl implements MasterService {
     private QuestionService questionService;
     @Autowired
     private ExamSheetService examSheetService;
+
     @Override
     public List<Master> masters() {
         return repository.findAll();
@@ -53,7 +58,7 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
-    public List<Course> findMyCourses(){
+    public List<Course> findMyCourses() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User masterUser = userService.findByUserName(auth.getName());
         master = repository.findByUser(masterUser);
@@ -91,7 +96,7 @@ public class MasterServiceImpl implements MasterService {
         examQuestionService.findAllExamQuestionsOfCourse(courseName)
                 .stream()
                 .forEach(examQuestion -> {
-                    if(!questions.contains(examQuestion.getQuestion())){
+                    if (!questions.contains(examQuestion.getQuestion())) {
                         questions.add(examQuestion.getQuestion());
                     }
                 });
@@ -161,5 +166,37 @@ public class MasterServiceImpl implements MasterService {
     public List<ExamSheet> findAllUncompletedExamSheets(Exam exam) {
         List<ExamSheet> uncompletedExamSheets = examSheetService.findAllUncompletedExamSheets(exam);
         return uncompletedExamSheets;
+    }
+
+    @Override
+    public ExamSheet findExamSheetById(Long id) {
+        return examSheetService.findById(id);
+    }
+
+    @Override
+    public void correctMultipleChoiceQuestions(ExamSheet examSheet) {
+        AtomicInteger i = new AtomicInteger();
+        List<Float> eachQuestionMark = examSheet.getEachQuestionMark();
+        List<Float> eachQuestionMarkGotten = examSheet.getStudentMarkFromEachQuestion();
+        examSheet.getQuestions().stream().forEach(question -> {
+            if (question.getType().equals(MULTIPLE_CHOICES)
+                    & examSheet.getStudentAnswer().get(i.get()).equals(question.getAnswerKey())) {
+                    eachQuestionMarkGotten.set(i.get(), eachQuestionMark.get(i.get()));
+            }
+        i.getAndIncrement();
+        });
+        examSheet.setStudentMarkFromEachQuestion(eachQuestionMarkGotten);
+        examSheetService.save(examSheet);
+    }
+
+    @Override
+    public void correctDescriptiveAndSubmitTotalGrade(Long id, Map<Integer, Float> marksMap) {
+        ExamSheet examSheet = examSheetService.findById(id);
+        List<Float> marksGotten = examSheet.getStudentMarkFromEachQuestion();
+        for (int index : marksMap.keySet()){
+            marksGotten.set(index, marksMap.get(index));
+        }
+        examSheet.setStudentMarkFromEachQuestion(marksGotten);
+        examSheetService.save(examSheet);
     }
 }

@@ -3,13 +3,20 @@ package ir.pb.online_examination_system.controllers;
 import ir.pb.online_examination_system.domains.*;
 import ir.pb.online_examination_system.services.MasterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static ir.pb.online_examination_system.domains.QuestionType.DESCRIPTIVE;
+import static ir.pb.online_examination_system.domains.QuestionType.MULTIPLE_CHOICES;
 
 @Controller
 @RequestMapping("/master")
@@ -76,7 +83,7 @@ public class MasterController {
         return "add-questions";
     }
 
-    public void questions(Model model, String courseName, Exam exam){
+    public void questions(Model model, String courseName, Exam exam) {
         List<Question> questions = service.findAllQuestionsOfCourse(courseName);
         List<Question> questionsOfExam = service.findAllQuestionsOfExam(exam);
         model.addAttribute("questions", questions
@@ -88,11 +95,11 @@ public class MasterController {
     }
 
     @PostMapping("/add-stored-question-to-exma")
-    public String addQuestionToExam(@ModelAttribute ExamQuestion examQuestion, Model model){
-        if(service.sumOfMarksUpToNow(examQuestion.getExam()) + examQuestion.getMark()
-                <= examQuestion.getExam().getGrade()){
+    public String addQuestionToExam(@ModelAttribute ExamQuestion examQuestion, Model model) {
+        if (service.sumOfMarksUpToNow(examQuestion.getExam()) + examQuestion.getMark()
+                <= examQuestion.getExam().getGrade()) {
             service.saveExamQuestion(examQuestion);
-        }else{
+        } else {
             model.addAttribute("gradeError", "مجموع نمرات سوالات بیش از مجموع نمره آزمون است!");
         }
         questions(model, examQuestion.getCourseName(), examQuestion.getExam());
@@ -123,7 +130,7 @@ public class MasterController {
     }
 
     @GetMapping("/delete-question-from-exam/{questionId}/{examId}")
-    public String deleteQuestionFromExam(@PathVariable Long questionId, @PathVariable Long examId, Model model){
+    public String deleteQuestionFromExam(@PathVariable Long questionId, @PathVariable Long examId, Model model) {
         Exam exam = service.findExamById(examId);
         Question question = service.findQuestionById(questionId);
 //        service.deleteExamQuestionByQuestionAndExam(question, exam);
@@ -134,7 +141,7 @@ public class MasterController {
     }
 
     @GetMapping("/students-took-exam/{examId}")
-    public String showStudentsWhoCompletedExam(@PathVariable Long examId, Model model){
+    public String showStudentsWhoCompletedExam(@PathVariable Long examId, Model model) {
         Exam exam = service.findExamById(examId);
         List<ExamSheet> completedExamSheets = service.findAllCompletedExamSheets(exam);
         List<ExamSheet> uncompletedExamSheets = service.findAllUncompletedExamSheets(exam);
@@ -150,8 +157,42 @@ public class MasterController {
     }
 
     @GetMapping("/see-examSheet/{id}")
-    public String seeStudentExamSheet(@PathVariable Long id, Model model){
-
+    public String seeStudentExamSheet(@PathVariable Long id, Model model) {
+        ExamSheet examSheet = service.findExamSheetById(id);
+        List<Question> questions = examSheet.getQuestions();
+        List<String> questionsInTimeOfExam = examSheet.getQuestionsInTimeOfExam();
+        List<String> studentAnswers = examSheet.getStudentAnswer();
+        List<String> studentAnswersToDescriptive = new ArrayList<>();
+        questions.stream()
+                .forEach(question -> {
+                    if (question.getType().equals(DESCRIPTIVE)) {
+                        studentAnswersToDescriptive.add(studentAnswers.get(questions.indexOf(question)));
+                    }
+                });
+        List<String> descriptiveQuestions = questionsInTimeOfExam.stream()
+                .filter(question -> questions.get(questionsInTimeOfExam.indexOf(question)).getType().equals(DESCRIPTIVE))
+                .collect(Collectors.toList());
+        List<Float> eachQuestionMark = new ArrayList<>();
+        List<Integer> descriptiveIndex = new ArrayList<>();
+        questions.stream().forEach(question -> {
+            if(question.getType().equals(DESCRIPTIVE)){
+                eachQuestionMark.add(examSheet.getEachQuestionMark().get(questions.indexOf(question)));
+                descriptiveIndex.add(questions.indexOf(question));
+            }
+        });
+        service.correctMultipleChoiceQuestions(examSheet);
+        model.addAttribute("descriptiveQuestions", descriptiveQuestions);
+        model.addAttribute("descriptiveIndex", descriptiveIndex);
+        model.addAttribute("eachQuestionMark", eachQuestionMark);
+        model.addAttribute("examSheetId", examSheet.getId());
+        model.addAttribute("descriptiveAnswers", studentAnswersToDescriptive);
         return "student-exam-sheet";
+    }
+
+    @PostMapping("/set-marks-of-descriptive-questions/{id}")
+    public ResponseEntity<Object> examSheetAnswerSetter(@PathVariable Long id,
+                                                        @RequestBody Map<Integer, Float> marksMap) {
+        service.correctDescriptiveAndSubmitTotalGrade(id, marksMap);
+        return null;
     }
 }

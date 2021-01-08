@@ -16,4 +16,5 @@ public interface ExamQuestionRepository extends JpaRepository<ExamQuestion, Long
     void deleteByQuestionAndExam(Question question, Exam exam);
     void removeByQuestionAndExam(Question question, Exam exam);
     ExamQuestion findByQuestionAndExam(Question question, Exam exam);
+    ExamQuestion findByExamAndQuestion(Exam exam, Question question);
 }

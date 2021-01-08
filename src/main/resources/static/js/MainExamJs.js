@@ -3,20 +3,22 @@ $(document).ready(function () {
     if (questions[0].type === 'MULTIPLE_CHOICE') {
         $(quest).append(`
             <div id="question-problem">${questions[0].problem}
-                <div id="answer-div" class="form-check">
                 `)
         for (i = 0; i < questions[0].alternatives.length; i++){
             $(quest).append(`
+                <div id="answer-div" class="form-check">
                     <input class="form-check-input" type="radio" name="answer" id="alternative + ${i}"
-                        value="${i + 1}" checked>
+                        value="${i}" checked>
                             <label class="form-check-label" for="alternative + ${i}">
                                 ${i + 1}. ${questions[0].alternatives[i]}
                             </label>
                             <br>
                     </div>
-                </div>
             `)
         }
+    $(quest).append(`
+        </div>
+    `)
     } else {
         $(quest).append(`
                     <div id="question-problem">${questions[0].problem}
@@ -41,20 +43,22 @@ function htmlMaker(x){
     if (questions[x].type == "MULTIPLE_CHOICES") {
         $(quest).append(`
             <div id="question-problem">${questions[x].problem}
-                <div id="answer-div" class="form-check">
                 `)
         for (i = 0; i < questions[x].alternatives.length; i++){
             $(quest).append(`
+                <div id="answer-div" class="form-check">
                     <input class="form-check-input" type="radio" name="answer" id="alternative + ${i}"
-                        value="${questions[x].alternatives[i]}" checked>
+                        value="${i}" checked>
                             <label class="form-check-label" for="alternative + ${i}">
                                 ${i + 1}. ${questions[x].alternatives[i]}
                             </label>
                             <br>
                     </div>
-                </div>
             `)
         }
+    $(quest).append(`
+        </div>
+    `)
     } else {
         $(quest).append(`
                     <div id="question-problem">${questions[x].problem}

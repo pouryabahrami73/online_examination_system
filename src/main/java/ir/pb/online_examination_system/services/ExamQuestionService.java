@@ -22,4 +22,6 @@ public interface ExamQuestionService {
     ExamQuestion findExamQuestionByQuestionAndExam(Question question, Exam exam);
 
     void delete(ExamQuestion examQuestion);
+
+    Float findMarkOfQuestion(Exam exam, Question question);
 }

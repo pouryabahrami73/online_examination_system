@@ -56,4 +56,10 @@ public class ExamQuestionServiceImpl implements ExamQuestionService {
         examQuestion.setExam(null);
         repository.save(examQuestion);
     }
+
+    @Override
+    public Float findMarkOfQuestion(Exam exam, Question question) {
+        float mark = repository.findByExamAndQuestion(exam, question).getMark();
+        return mark;
+    }
 }

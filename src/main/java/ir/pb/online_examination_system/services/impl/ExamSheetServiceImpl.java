@@ -5,6 +5,7 @@ import ir.pb.online_examination_system.domains.ExamSheet;
 import ir.pb.online_examination_system.domains.Question;
 import ir.pb.online_examination_system.domains.Student;
 import ir.pb.online_examination_system.repositories.ExamSheetRepository;
+import ir.pb.online_examination_system.services.ExamQuestionService;
 import ir.pb.online_examination_system.services.ExamSheetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,13 +17,18 @@ import java.util.stream.Collectors;
 public class ExamSheetServiceImpl implements ExamSheetService {
     @Autowired
     private ExamSheetRepository repository;
+    @Autowired
+    private ExamQuestionService examQuestionService;
     @Override
     public ExamSheet makeNewExamSheet(Student student, Exam exam, List<Question> questions) {
         ExamSheet examSheet = new ExamSheet();
         examSheet.setStudent(student);
         examSheet.setQuestions(questions);
         List<String> questionsInExamTime = new ArrayList<>();
-        questions.stream().forEach(question -> questionsInExamTime.add(question.getProblem()));
+        List<Float> eachQuestionMarkInExamTime = new ArrayList<>();
+        questions.stream().forEach(question -> {
+            questionsInExamTime.add(question.getProblem());
+            eachQuestionMarkInExamTime.add(findQuestionMarkInExam(exam, question));});
         examSheet.setQuestionsInTimeOfExam(questionsInExamTime);
         examSheet.setExam(exam);
         Date date = new Date();
@@ -34,9 +40,22 @@ public class ExamSheetServiceImpl implements ExamSheetService {
         Date finishTime = new Date(t + (exam.getDurationInMin() * ONE_MINUTE_IN_MILLIS));
         examSheet.setExamFinishTime(finishTime);
         examSheet.setComplete(false);
+        List<Float> eachQuestionMark = new ArrayList<>();
+        List<String> defaultAnswers = new ArrayList<>();
+        examSheet.getQuestions().stream().forEach(question -> {eachQuestionMark
+                .add(examQuestionService.findExamQuestionByQuestionAndExam(question, exam).getMark());
+        defaultAnswers.add("");
+        });
+        List<Float> eachQuestionMarkGotten = new ArrayList<>();
+        questions.stream().forEach(mark -> eachQuestionMarkGotten.add(0F));
+        examSheet.setEachQuestionMark(eachQuestionMark);
+        examSheet.setStudentAnswer(defaultAnswers);
+        examSheet.setStudentMarkFromEachQuestion(eachQuestionMarkGotten);
         repository.save(examSheet);
         return examSheet;
     }
+
+
 
     @Override
     public ExamSheet findById(long examSheetId) {
@@ -50,10 +69,6 @@ public class ExamSheetServiceImpl implements ExamSheetService {
             List<String> studentAnswers = examSheet.getStudentAnswer();
             studentAnswers.set(questionIndex, answer);
             examSheet.setStudentAnswer(studentAnswers);
-        }else {
-            List<String> studentAnswer = examSheet.getStudentAnswer();
-            studentAnswer.add(answer);
-            examSheet.setStudentAnswer(studentAnswer);
         }
         repository.save(examSheet);
     }
@@ -100,5 +115,16 @@ public class ExamSheetServiceImpl implements ExamSheetService {
     public List<ExamSheet> findAllUncompletedExamSheets(Exam exam) {
         return repository.findAllByExamAndComplete(exam, false)
                 .stream().collect(Collectors.toList());
+    }
+
+    @Override
+    public Float findQuestionMarkInExam(Exam exam, Question question) {
+        float mark = examQuestionService.findMarkOfQuestion(exam, question);
+        return mark;
+    }
+
+    @Override
+    public void save(ExamSheet examSheet) {
+        repository.save(examSheet);
     }
 }
