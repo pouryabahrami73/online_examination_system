@@ -54,4 +54,6 @@ public interface MasterService {
     void correctMultipleChoiceQuestions(ExamSheet examSheet);
 
     void correctDescriptiveAndSubmitTotalGrade(Long id, Map<Integer, Float> marksMap);
+
+    void giveMakeToExamSheet(Long id);
 }

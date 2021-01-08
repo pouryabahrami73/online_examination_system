@@ -104,7 +104,7 @@ function nextQuestion(y) {
 
 function finisherButton(y){
     sendJSON(y);
-    window.location.href = "/student/finish-exam/".concat(examSheetId);
+    // window.location.href = "/student/finish-exam/".concat(examSheetId);
 }
 
 function sendJSON(n){

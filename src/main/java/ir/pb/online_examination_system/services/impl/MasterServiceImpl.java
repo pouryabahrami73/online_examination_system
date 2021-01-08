@@ -35,6 +35,8 @@ public class MasterServiceImpl implements MasterService {
     private QuestionService questionService;
     @Autowired
     private ExamSheetService examSheetService;
+    @Autowired
+    private StudentExamService studentExamService;
 
     @Override
     public List<Master> masters() {
@@ -198,5 +200,16 @@ public class MasterServiceImpl implements MasterService {
         }
         examSheet.setStudentMarkFromEachQuestion(marksGotten);
         examSheetService.save(examSheet);
+    }
+
+    @Override
+    public void giveMakeToExamSheet(Long id) {
+        ExamSheet examSheet = examSheetService.findById(id);
+        AtomicReference<Float> markGottenByStudent = new AtomicReference<>((float) 0);
+        examSheet.getStudentMarkFromEachQuestion().stream()
+                .forEach(mark -> markGottenByStudent.updateAndGet(v -> new Float((float) (v + mark))));
+        StudentExam studentExam = studentExamService.findStudentExamByExamSheet(examSheet);
+        studentExam.setGrade(markGottenByStudent.get());
+        studentExamService.save(studentExam);
     }
 }

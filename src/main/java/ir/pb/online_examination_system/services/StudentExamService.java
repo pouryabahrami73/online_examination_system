@@ -11,4 +11,8 @@ public interface StudentExamService {
     List<StudentExam> findStudentExams(Student student);
 
     void makeNewStudentExam(Exam exam, Student student, ExamSheet examSheet);
+
+    StudentExam findStudentExamByExamSheet(ExamSheet examSheet);
+
+    void save(StudentExam studentExam);
 }

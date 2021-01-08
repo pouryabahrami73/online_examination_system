@@ -28,4 +28,14 @@ public class StudentExamServiceImpl implements StudentExamService {
         studentExam.setExamSheet(examSheet);
         repository.save(studentExam);
     }
+
+    @Override
+    public StudentExam findStudentExamByExamSheet(ExamSheet examSheet) {
+        return repository.findByExamSheet(examSheet);
+    }
+
+    @Override
+    public void save(StudentExam studentExam) {
+        repository.save(studentExam);
+    }
 }

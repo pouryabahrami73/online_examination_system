@@ -193,6 +193,7 @@ public class MasterController {
     public ResponseEntity<Object> examSheetAnswerSetter(@PathVariable Long id,
                                                         @RequestBody Map<Integer, Float> marksMap) {
         service.correctDescriptiveAndSubmitTotalGrade(id, marksMap);
+        service.giveMakeToExamSheet(id);
         return null;
     }
 }
