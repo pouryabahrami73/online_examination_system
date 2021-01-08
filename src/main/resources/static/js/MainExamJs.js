@@ -104,10 +104,9 @@ function nextQuestion(y) {
 
 function finisherButton(y){
     sendJSON(y);
-    // window.location.href = "/student/finish-exam/".concat(examSheetId);
 }
 
-function sendJSON(n){
+async function sendJSON(n){
     const toSend = {
         questionId: questions[n].id,
         answer: $('input[name ="answer"]').val(),
@@ -119,4 +118,12 @@ function sendJSON(n){
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(data);
+    if(n == (questions.length - 1)){
+        await sleep(2000);
+        window.location.href = "/student/finish-exam/".concat(examSheetId);
+    }
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
