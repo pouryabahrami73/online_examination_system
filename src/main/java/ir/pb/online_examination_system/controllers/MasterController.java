@@ -10,13 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import static ir.pb.online_examination_system.domains.QuestionType.DESCRIPTIVE;
-import static ir.pb.online_examination_system.domains.QuestionType.MULTIPLE_CHOICES;
 
 @Controller
 @RequestMapping("/master")
@@ -78,8 +76,6 @@ public class MasterController {
         Exam exam = service.findExamById(id);
         model.addAttribute("exam", exam);
         questions(model, exam.getCourse().getName(), exam);
-//        model.addAttribute("questions", service.findAllQuestionsOfCourse(exam.getCourse()));
-//        model.addAttribute("questionsOfExam", service.findAllQuestionsOfExam(exam));
         return "add-questions";
     }
 
@@ -124,8 +120,6 @@ public class MasterController {
         service.saveExamQuestion(examQuestion);
 
         questions(model, exam1.getCourse().getName(), exam1);
-//        model.addAttribute("exam", exam);
-//        model.addAttribute("questions", service.findAllQuestionsOfCourse(exam.getCourse()));
         return "add-questions";
     }
 
@@ -145,8 +139,6 @@ public class MasterController {
         Exam exam = service.findExamById(examId);
         List<ExamSheet> completedExamSheets = service.findAllCompletedExamSheets(exam);
         List<ExamSheet> uncompletedExamSheets = service.findAllUncompletedExamSheets(exam);
-        /*model.addAttribute("complete", completedExamSheets);
-        model.addAttribute("incomplete", uncompletedExamSheets);*/
         List<ExamSheet> allSheets = completedExamSheets;
         uncompletedExamSheets.stream()
                 .forEach(examSheet -> allSheets.add(examSheet));

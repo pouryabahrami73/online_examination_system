@@ -1,0 +1,26 @@
+*{
+    font-family: "W_yasamin";
+}
+.top100{
+    top: 100px;
+ }
+
+.pad-tb{
+    padding-top: 100px;
+}
+
+.bg-gray{
+    background-color: #616161;
+}
+
+#exam-finisher-btn{
+    float: left;
+}
+#next-question-btn{
+    float: left;
+}
+#countdown{
+    top: 400px;
+    font-size: xx-large;
+    position: fixed;
+}

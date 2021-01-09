@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ورود</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
+          integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="/css/firstCss.css">
+</head>
+<body class="bg-dark" style="padding-top: 150px">
+<div class="card text-center mx-auto w-75 p-3 bg-secondary text-warning">
+    <div class="card-header">
+        سامانه آزمون آنلاین
+    </div>
+    <form class="card-body" method="post" th:action="@{/login}">
+        <h5 class="card-title">ورود یا ثبت نام</h5>
+        <div th:if="${param.error}" class="text-center mx-auto w-40 p-3 bg-secondary">
+            <h5 class="alert alert-info text-primary" role="alert">
+                نام کاربری یا رمز عبور اشتباه است!
+            </h5>
+        </div>
+        <div th:if="${param.logout}" class="text-center mx-auto w-40 p-3 bg-danger">
+            <h5 class="alert alert-info text-warning" role="alert">
+                شما از سامانه خارج شدید!
+            </h5>
+        </div>
+        <br>
+        <div class="form-group row">
+            <div class="col">
+                <input type="text" class="form-control" id="username" name="username" placeholder="نام کاربری">
+            </div>
+            <div class="col">
+                <input type="password" class="form-control" id="password" name="password" placeholder="رمز عبور">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col">
+                <button type="submit" class="btn btn-dark col-sm-4 text-warning">ورود</button>
+            </div>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div class="form-group row">
+            <div class="col">
+                <a th:href="@{/sign-up-form}" class="text-warning">ثبت نام</a>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
