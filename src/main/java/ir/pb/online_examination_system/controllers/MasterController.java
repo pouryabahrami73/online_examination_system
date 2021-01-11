@@ -127,7 +127,6 @@ public class MasterController {
     public String deleteQuestionFromExam(@PathVariable Long questionId, @PathVariable Long examId, Model model) {
         Exam exam = service.findExamById(examId);
         Question question = service.findQuestionById(questionId);
-//        service.deleteExamQuestionByQuestionAndExam(question, exam);
         ExamQuestion examQuestion = service.findExamQuestionByQuestionAndExam(question, exam);
         service.deleteExamQuestion(examQuestion);
         questions(model, exam.getCourse().getName(), exam);
