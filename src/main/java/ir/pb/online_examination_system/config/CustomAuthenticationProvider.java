@@ -12,15 +12,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-
+// Costume AuthenticationProvider Class.
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
-
+    // userDetailService field which is a been.
     @Autowired
     private MyUserDetailsService userDetailsService;
+    // passwordEncoder field which is a been.
     @Autowired
     private PasswordEncoder passwordEncoder;
-
+    // authenticate method overridden to customize BadCredentialException's massage and authenticate user.
+    // if the user is authenticated his or her authorities and username and password to the costume LoginSuccessHandler
+    // class.
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
@@ -31,14 +34,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         if (passwordEncoder.matches(password, userDetails.getPassword())) {
             return new UsernamePasswordAuthenticationToken(
-                    username,
+                    authentication.getPrincipal(),
                     password,
                     userDetails.getAuthorities());
         } else {
             throw new BadCredentialsException("رمز عبور اشتباه است!");
         }
     }
-
+    // supports method overridden to represent whether the class can be authenticated or not.
     @Override
     public boolean supports(Class<?> aClass) {
         return true;

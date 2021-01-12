@@ -28,8 +28,6 @@ public class MasterServiceImpl implements MasterService {
     @Autowired
     private ExamService examService;
     @Autowired
-    private Master master;
-    @Autowired
     private ExamQuestionService examQuestionService;
     @Autowired
     private QuestionService questionService;
@@ -50,6 +48,7 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public void setUser(User user) {
+        Master master = new Master();
         master.setUser(user);
         repository.save(master);
     }
@@ -63,7 +62,7 @@ public class MasterServiceImpl implements MasterService {
     public List<Course> findMyCourses() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User masterUser = userService.findByUserName(auth.getName());
-        master = repository.findByUser(masterUser);
+        Master master = repository.findByUser(masterUser);
         return master.getCourses();
     }
 

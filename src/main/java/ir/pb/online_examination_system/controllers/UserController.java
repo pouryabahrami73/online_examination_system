@@ -9,18 +9,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-
-
+// UserController class returns the views that should be returned to the user with no specific
+// role or user who is not authenticated.
 @Controller
 @RequestMapping("/user")
 public class UserController {
-
+    // user service autowired to give the needed services to the UserController class.
     @Autowired
     private UserService service;
-    private Map<Character, Character> charMap = new HashMap<>();
+    // charMap field is a map of persian characters to the english characters.
+//    private Map<Character, Character> charMap = new HashMap<>();
+    // userSubmit method gets the user's data which were written in the registration form.
     @PostMapping("/add")
     public String userSubmit(@ModelAttribute User user, Model model){
-//        charMap.p
         model.addAttribute("user", user);
         String defaultUserName = user.getFirstName().concat(String.valueOf(user.getNationalCode()));
         long defaultPassWord = user.getNationalCode();

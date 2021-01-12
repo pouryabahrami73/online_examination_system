@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Component
 public class Master extends BaseEntity<Long> {
     @OneToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_user")

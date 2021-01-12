@@ -10,26 +10,26 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
+// SecurityConfig class decides whether to allow or not different requests to have access to the app. and decides to
+// stick which view to which role.
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Autowired
     private CustomAuthenticationProvider authenticationProvider;
 
     @Autowired
     private MyLoginSuccessHandler successHandler;
-
+    // configure method sets the customized authenticationProvider to the AuthenticationProviderBuilder.
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider);
     }
-
+    // passwordEncoder method returns the PasswordEncoder to be used in the app.
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+    // configure method defines that which role can access to which view or views.
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http

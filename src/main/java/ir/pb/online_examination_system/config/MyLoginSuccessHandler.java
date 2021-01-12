@@ -17,13 +17,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+// MyLoginSuccessHandler is a customised LoginSuccessHandler. it's duty is determine the role of the user and
+// guide the user to related page.
 @Configuration
 public class MyLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-
+    // UserService field is autowired to get the user from it.
     @Autowired
     private UserService service;
-
+    // handle method is overridden to define redirections and related stuff.
     @Override
     protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
@@ -34,7 +35,8 @@ public class MyLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler
         RedirectStrategy strategy = new DefaultRedirectStrategy();
         strategy.sendRedirect(request, response, targetUrl);
     }
-
+    // determineTargetUrl method send each user to the related page upon his or her role if the user registration
+    // process was committed by the admin user.
     protected String determineTargetUrl(Authentication authentication) {
         String url = "/login?error=ture";
         User user = service.findByUserName(authentication.getName());
