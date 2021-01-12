@@ -50,6 +50,7 @@ public class ExamSheetServiceImpl implements ExamSheetService {
         questions.stream().forEach(mark -> eachQuestionMarkGotten.add(0F));
         examSheet.setEachQuestionMark(eachQuestionMark);
         examSheet.setStudentAnswer(defaultAnswers);
+        examSheet.setCorrected(false);
         examSheet.setStudentMarkFromEachQuestion(eachQuestionMarkGotten);
         repository.save(examSheet);
         return examSheet;

@@ -24,3 +24,8 @@
     font-size: xx-large;
     position: fixed;
 }
+
+.position-left{
+    position: absolute;
+    left: 0;
+}
