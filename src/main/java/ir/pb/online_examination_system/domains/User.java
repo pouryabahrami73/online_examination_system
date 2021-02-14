@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 
 @Entity
 public class User extends BaseEntity<Long> {
-    @Column
+    @Column(unique = true)
     private String userName;
     @Column
     private String passWord;
@@ -19,8 +19,11 @@ public class User extends BaseEntity<Long> {
     private String firstName;
     @Column
     private String lastName;
-    @Column
+    @Column(unique = true)
     private long nationalCode;
+
+    public User() {
+    }
 
     public String getFirstName() {
         return firstName;

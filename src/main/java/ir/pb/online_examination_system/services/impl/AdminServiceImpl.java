@@ -17,16 +17,34 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
 
 
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private MasterService masterService;
-    @Autowired
-    private StudentService studentService;
-    @Autowired
-    private CourseService courseService;
+    private final UserService userService;
+    private final MasterService masterService;
+    private final StudentService studentService;
+    private final CourseService courseService;
+
+    public AdminServiceImpl(UserService userService, MasterService masterService, StudentService studentService, CourseService courseService) {
+        this.userService = userService;
+        this.masterService = masterService;
+        this.studentService = studentService;
+        this.courseService = courseService;
+    }
 
     @Override
+    public List<User> findAll() {
+        return userService.findAllActiveOrInactive(false);
+    }
+
+    @Override
+    public List<User> filteredUsers(List<Filter> filters) {
+        return userService.findAll(filters);
+    }
+
+    /*@Override
+    public List<User> findAll(List<Filter> filters) {
+        return userService.findAll(filters);
+    }*/
+
+    /*@Override
     public List<User> filteredUsers(String filterFirstName, String filterLastName, String filterRoles){
         List<User> users = new ArrayList<>();
         if (filterFirstName.equals("") & filterLastName.equals("") & filterRoles == null){
@@ -34,7 +52,8 @@ public class AdminServiceImpl implements AdminService {
         }else if (filterLastName.equals("") & filterRoles == null){
             users = userService.findAllActiveOrInactiveByFirstname(false, filterFirstName);
         }else if (filterFirstName.equals("") & filterRoles == null){
-            users = userService.findAllActiveOrInactiveByLastName(false, filterLastName);
+//            users = userService.findAllActiveOrInactiveByLastName(false, filterLastName);
+            users = null;
         }else if (filterFirstName.equals("") & filterLastName.equals("")){
             users = userService.findAllActiveOrInactiveByRoles(false, filterRoles);
         }else if(filterRoles == null){
@@ -45,7 +64,7 @@ public class AdminServiceImpl implements AdminService {
             users = userService.findAllActiveOrInactiveByFirstNameAndRoles(false, filterFirstName, filterRoles);
         }
         return users;
-    }
+    }*/
 
     @Override
     public User findByUserId(Long id) {

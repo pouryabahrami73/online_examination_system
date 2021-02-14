@@ -1,6 +1,7 @@
 package ir.pb.online_examination_system.services;
 
 import ir.pb.online_examination_system.domains.User;
+import ir.pb.online_examination_system.services.impl.Filter;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ public interface UserService {
     User findById(Long id);
     List<User> findAllActiveOrInactive(boolean situation);
     List<User> findAllActiveOrInactiveByFirstname(boolean situation, String firstName);
-    List<User> findAllActiveOrInactiveByLastName(boolean situation, String lastName);
+//    List<User> findAllActiveOrInactiveByLastName(boolean situation, String lastName);
     List<User> findAllActiveOrInactiveByRoles(boolean situation, String roles);
     List<User> findAllActiveOrInactiveByFirstNameAndLastName(boolean situation, String firstName, String lastName);
     List<User> findAllActiveOrInactiveByFirstNameAndRoles(boolean situation, String firstName, String roles);
@@ -18,4 +19,8 @@ public interface UserService {
     String hashPass(String pass);
 
     User findByUserName(String name);
+
+    User findByNationalCode(long nationalCode);
+
+    List<User> findAll(List<Filter> filters);
 }

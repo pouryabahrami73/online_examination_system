@@ -10,7 +10,11 @@
 </head>
 <body class="bg-dark" style="padding-top: 150px">
 <div class="card text-center mx-auto w-75 p-3 bg-secondary" >
-    <div class="alert alert-info text-primary" role="alert">
+    <div th:if="${message} != null" class="text-center mx-auto w-40 p-3 bg-secondary">
+        <h5 id="message" class="alert alert-info text-primary" role="alert" th:text="${message}">
+        </h5>
+    </div>
+    <div th:if="${user} != null" class="alert alert-info text-primary" role="alert">
         <h4 class="alert-heading text-primary">ارسال موفق اطلاعات!</h4>
         <p>اطلاعات شما با موقیت برای مدیر ارسال شد!</p>
         <hr>

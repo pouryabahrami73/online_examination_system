@@ -1,4 +1,4 @@
-package ir.pb.online_examination_system.domains;
+package ir.pb.online_examination_system.dtos;
 
 public class ExamSheetStarterDTO {
     private long examSheetId;

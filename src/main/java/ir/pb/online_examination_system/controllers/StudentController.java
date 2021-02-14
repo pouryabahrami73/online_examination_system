@@ -1,6 +1,7 @@
 package ir.pb.online_examination_system.controllers;
 
 import ir.pb.online_examination_system.domains.*;
+import ir.pb.online_examination_system.dtos.QuestionAnswerDTO;
 import ir.pb.online_examination_system.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

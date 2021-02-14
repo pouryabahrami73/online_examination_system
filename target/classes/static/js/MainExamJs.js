@@ -1,6 +1,6 @@
 $(document).ready(function () {
     let quest = document.getElementById("question");
-    if (questions[0].type === 'MULTIPLE_CHOICE') {
+    if (questions[0].type == "MULTIPLE_CHOICES") {
         $(quest).append(`
             <div id="question-problem">${questions[0].problem}
                 `)

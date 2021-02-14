@@ -17,15 +17,15 @@ $(document).ready(function () {
         <div type="submit" onclick="finishCorrection()" class="btn btn-dark col-sm-4 text-warning">پایان تصحیح</div>
     `)
 })
-function finishCorrection(){
+async function finishCorrection() {
     var map = {};
-    for (i = 0; i < descriptiveQuestions.length; i++){
+    for (i = 0; i < descriptiveQuestions.length; i++) {
         let mark = document.getElementById(descriptiveIndex[i]);
-        if($(mark).val() > eachQuestionMark[i] || $(mark).val() < 0) {
+        if ($(mark).val() > eachQuestionMark[i] || $(mark).val() < 0) {
             let massage = document.getElementById("massage");
             massage.innerText = 'نمره خارج از بازه تعیین شده می باشد!';
             return;
-        }else {
+        } else {
             massage.innerText = '';
             map[descriptiveIndex[i]] = $(mark).val();
         }
@@ -36,4 +36,10 @@ function finishCorrection(){
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(data);
+    await sleep(2000);
+    window.location.href = "/master";
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

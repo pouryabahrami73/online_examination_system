@@ -4,6 +4,7 @@ import ir.pb.online_examination_system.domains.MyUserDetails;
 import ir.pb.online_examination_system.domains.User;
 import ir.pb.online_examination_system.repositories.UserRepository;
 import ir.pb.online_examination_system.services.UserService;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,11 +13,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService, UserService {
-
+    @Autowired
+    private CustomUserRepository customUserRepository;
     @Autowired
     private UserRepository repository;
 
@@ -51,10 +54,10 @@ public class MyUserDetailsService implements UserDetailsService, UserService {
         return repository.findAllByActiveAndFirstName(false, firstName);
     }
 
-    @Override
+    /*@Override
     public List<User> findAllActiveOrInactiveByLastName(boolean situation, String lastName) {
         return repository.findAllByActiveAndLastName(false, lastName);
-    }
+    }*/
 
     @Override
     public List<User> findAllActiveOrInactiveByRoles(boolean situation, String roles) {
@@ -89,6 +92,22 @@ public class MyUserDetailsService implements UserDetailsService, UserService {
 
     @Override
     public User findByUserName(String name) {
-        return repository.findByUserName(name).get();
+        try {
+            return repository.findByUserName(name).get();
+        }catch (NoSuchElementException e){
+            LoggerFactory.getLogger(MyUserDetails.class).warn("no value");
+        }
+        return null;
+    }
+
+    @Override
+    public User findByNationalCode(long nationalCode) {
+        return repository.findByNationalCode(nationalCode);
+    }
+
+    @Override
+    public List<User> findAll(List<Filter> filters) {
+
+        return customUserRepository.getQueryResult(filters);
     }
 }
